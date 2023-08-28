@@ -1,3 +1,31 @@
+# Padrões a serem seguidos
+
+## ******************************Padrões de GIT******************************
+
+**Mensagem dos Commits**: *(Conventional commits)*
+
+- “**feat**: …” para novas implementações
+- “**fix**: …” para correções
+- “**refact**: …” para refatorações
+- “**chore**: …” para tarefas gerais
+
+**Criação de Branches**:
+
+- **feature/nome-da-branch** para novas implementações
+- **patch/nome-da-branch** para correções, refatorações e adaptações
+- **breaking/nome-da-branch** para alterações muito grandes, exemplo mudar uma biblioteca muito usada
+
+## Padrões de Código
+
+************Gerais************
+
+O código deve ser escrito em inglês; comentários em português
+
+Devemos usar variáveis com nomes claros, ************sempre************ em snake_case.
+
+Funções devem ser declaradas usando camelCase.
+
+
 # Especificação do Trabalho Parte 1: Funcionalidades básicas em grafos simples
 
 Este documento traz a especificação do Trabalho 1, atividade avaliativa do tipo "Trabalho Prático", e serve de base
