@@ -3,11 +3,6 @@
 // Construtor
 Grafo::Grafo(bool isDigrafo) {
     cout<<"Salve";
-    this->teste = "Pedro";
-}
-
-string Grafo::getPedro(){
-    return this->teste;
 }
 
 // Destrutor

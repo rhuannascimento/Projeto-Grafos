@@ -8,8 +8,6 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
     Grafo g = new Grafo(false);
-    
-    cout<<g.getPedro();
 
     // Nome do arquivo que você deseja ler
     string nomeArquivo = argv[1];
@@ -24,7 +22,7 @@ int main(int argc, char* argv[]) {
     }
 
     string linha;
-    string value;
+    
 
     // Loop para ler todas as linhas do arquivo
     while (getline(arquivo, linha)) {
