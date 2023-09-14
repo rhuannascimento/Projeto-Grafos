@@ -39,7 +39,9 @@ public:
     int getGrauEntrada();
     int getGrauSaida();
     
+    string getPedro();
 
+    string teste;
 
 private:
 
