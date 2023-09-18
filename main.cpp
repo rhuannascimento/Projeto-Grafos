@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-    Grafo g = new Grafo(false);
+    Grafo * g = new Grafo(false);
 
     // Nome do arquivo que você deseja ler
     string nomeArquivo = argv[1];
