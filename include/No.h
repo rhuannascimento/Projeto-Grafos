@@ -11,7 +11,7 @@ class Aresta;
 class No {
 public:
     No(int idNo);
-    No(int idNo, int weight);
+    No(int idNo, int pesoNo);
     virtual ~No();
 
     int getIdNo () {return idNo;}

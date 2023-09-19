@@ -16,7 +16,9 @@ class Grafo {
 public:
 
     //--- Construtor e Destrutor ---
-    Grafo();
+    Grafo(
+        int ordem
+    );
     ~Grafo();
 
     //--- Seters ---

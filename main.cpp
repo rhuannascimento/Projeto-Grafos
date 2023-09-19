@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     cout <<endl << "--------------------------------------------------------------------------------------------------" << endl<< endl;
 
-    Grafo * g = new Grafo();
+    Grafo * g = new Grafo(1);
 
     string archive_name = argv[1];
     ifstream archive("../instancias_grafos_n_ponderados/" + archive_name);

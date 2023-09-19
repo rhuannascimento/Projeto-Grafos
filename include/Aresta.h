@@ -11,8 +11,8 @@ class No;
 
 class Aresta {
 public:
-    Aresta(int noDestino);
-    Aresta(int noDestino, int pesoAresta);
+    Aresta(int idNoDestino);
+    Aresta(int idNoDestino, int pesoAresta);
 
     int getPesoAresta();
 
