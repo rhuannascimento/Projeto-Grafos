@@ -6,33 +6,22 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
+    cout <<endl << "--------------------------------------------------------------------------------------------------" << endl<< endl;
 
     Grafo * g = new Grafo();
 
-    // Nome do arquivo que você deseja ler
-    string nomeArquivo = argv[1];
-
-    // Abrir o arquivo
-    ifstream arquivo("../instancias_grafos_n_ponderados/" + nomeArquivo);
-
-    // Verificar se o arquivo foi aberto com sucesso
-    if (!arquivo.is_open()) {
-        cerr << "Erro ao abrir o arquivo " << nomeArquivo << endl;
+    string archive_name = argv[1];
+    ifstream archive("../instancias_grafos_n_ponderados/" + archive_name);
+    if (!archive.is_open()) {
+        cerr << "Erro ao abrir o arquivo " << archive_name << endl;
         return 1;
     }
-
-    string linha;
-    
-
-    // Loop para ler todas as linhas do arquivo
-    while (getline(arquivo, linha)) {
-        // Processar a linha aqui, você pode imprimir ou fazer qualquer outra coisa
-        cout<< linha << endl;
+    string line;    
+    while (getline(archive, line)) {
+        cout<< line << endl;
         break;
     }
-
-    // Fechar o arquivo
-    arquivo.close();
+    archive.close();
 
     return 0;
 }

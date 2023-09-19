@@ -6,6 +6,7 @@
 #include "No.h"
 #include "Aresta.h"
 
+
 using namespace std;
 
 class No;

@@ -7,7 +7,7 @@ Grafo::Grafo() {
 
 // Destrutor
 Grafo::~Grafo() {
-    // Faça qualquer limpeza de memória necessária aqui, se aplicável.
+    // Faça qualquer limpeza de memória necessária aqui, se aplicável
 }
 
 // Função para incrementar a ordem
