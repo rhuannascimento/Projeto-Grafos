@@ -1,19 +1,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "src/Grafo.cpp"
+#include "include/Grafo.h"
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
 
-    Grafo * g = new Grafo(false);
+    Grafo * g = new Grafo();
 
     // Nome do arquivo que você deseja ler
     string nomeArquivo = argv[1];
 
     // Abrir o arquivo
-    ifstream arquivo("./instancias_grafos_n_ponderados/" + nomeArquivo);
+    ifstream arquivo("../instancias_grafos_n_ponderados/" + nomeArquivo);
 
     // Verificar se o arquivo foi aberto com sucesso
     if (!arquivo.is_open()) {

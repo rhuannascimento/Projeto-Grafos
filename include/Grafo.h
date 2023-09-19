@@ -15,8 +15,8 @@ class Grafo {
 public:
 
     //--- Construtor e Destrutor ---
-    Grafo(bool isDigrafo);
-    virtual ~Grafo();
+    Grafo();
+    ~Grafo();
 
     //--- Seters ---
     void incOrdem();

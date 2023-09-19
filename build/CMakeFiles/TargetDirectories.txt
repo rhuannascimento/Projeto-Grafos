@@ -1,0 +1,3 @@
+/home/igor/Área de Trabalho/uf/S.O.S 5/Grafos/Trabalho/Projeto-Grafos/build/CMakeFiles/rebuild_cache.dir
+/home/igor/Área de Trabalho/uf/S.O.S 5/Grafos/Trabalho/Projeto-Grafos/build/CMakeFiles/edit_cache.dir
+/home/igor/Área de Trabalho/uf/S.O.S 5/Grafos/Trabalho/Projeto-Grafos/build/CMakeFiles/main.dir

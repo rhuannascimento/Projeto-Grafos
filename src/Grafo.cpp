@@ -1,7 +1,7 @@
 #include "../include/Grafo.h"
 
 // Construtor
-Grafo::Grafo(bool isDigrafo) {
+Grafo::Grafo() {
     cout<<"Salve";
 }
 
