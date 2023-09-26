@@ -29,25 +29,12 @@ public:
 
     //--- Funcoes de Aresta ---
   
-    
+    Aresta *insereAresta(int noOrigem, int noDestino);
 
     //--- Caracteristica do Grafo ---
     
-    void imprimeGrafo(){
-
-        if(this->noRaiz == nullptr){
-            return;
-        }
-        
-        cout<<"No raiz: "<< this->noRaiz->getIdNo() <<endl;
-        No * proxNo = this->noRaiz->getProxNo();
-
-        while(proxNo != nullptr){
-            cout<<proxNo->getIdNo()<<endl;
-            proxNo = proxNo->getProxNo();
-        }
-
-    }
+    void imprimeGrafo();
+    No *buscaNo(int no);
 
 
 private:
