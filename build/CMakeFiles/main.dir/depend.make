@@ -6,8 +6,16 @@ CMakeFiles/main.dir/main.cpp.o: ../include/Grafo.h
 CMakeFiles/main.dir/main.cpp.o: ../include/No.h
 CMakeFiles/main.dir/main.cpp.o: ../main.cpp
 
+CMakeFiles/main.dir/src/Aresta.cpp.o: ../include/Aresta.h
+CMakeFiles/main.dir/src/Aresta.cpp.o: ../include/No.h
+CMakeFiles/main.dir/src/Aresta.cpp.o: ../src/Aresta.cpp
+
 CMakeFiles/main.dir/src/Grafo.cpp.o: ../include/Aresta.h
 CMakeFiles/main.dir/src/Grafo.cpp.o: ../include/Grafo.h
 CMakeFiles/main.dir/src/Grafo.cpp.o: ../include/No.h
 CMakeFiles/main.dir/src/Grafo.cpp.o: ../src/Grafo.cpp
+
+CMakeFiles/main.dir/src/No.cpp.o: ../include/Aresta.h
+CMakeFiles/main.dir/src/No.cpp.o: ../include/No.h
+CMakeFiles/main.dir/src/No.cpp.o: ../src/No.cpp
 

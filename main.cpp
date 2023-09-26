@@ -8,9 +8,17 @@ using namespace std;
 int main(int argc, char* argv[]) {
     cout <<endl << "--------------------------------------------------------------------------------------------------" << endl<< endl;
 
-    Grafo * g = new Grafo(1);
+    Grafo * g = new Grafo();
 
-    string archive_name = argv[1];
+
+    g->insereNo(2);
+    g->insereNo(4);
+    g->insereNo(5);
+    g->insereNo(6);
+
+    g->imprimeGrafo();
+
+    /*string archive_name = argv[1];
     ifstream archive("../instancias_grafos_n_ponderados/" + archive_name);
     if (!archive.is_open()) {
         cerr << "Erro ao abrir o arquivo " << archive_name << endl;
@@ -21,7 +29,7 @@ int main(int argc, char* argv[]) {
         cout<< line << endl;
         break;
     }
-    archive.close();
+    archive.close();*/
 
     return 0;
 }

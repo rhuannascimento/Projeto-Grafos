@@ -150,6 +150,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/Aresta.o: src/Aresta.cpp.o
+
+.PHONY : src/Aresta.o
+
+# target to build an object file
+src/Aresta.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Aresta.cpp.o
+.PHONY : src/Aresta.cpp.o
+
+src/Aresta.i: src/Aresta.cpp.i
+
+.PHONY : src/Aresta.i
+
+# target to preprocess a source file
+src/Aresta.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Aresta.cpp.i
+.PHONY : src/Aresta.cpp.i
+
+src/Aresta.s: src/Aresta.cpp.s
+
+.PHONY : src/Aresta.s
+
+# target to generate assembly for a file
+src/Aresta.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Aresta.cpp.s
+.PHONY : src/Aresta.cpp.s
+
 src/Grafo.o: src/Grafo.cpp.o
 
 .PHONY : src/Grafo.o
@@ -177,6 +204,33 @@ src/Grafo.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Grafo.cpp.s
 .PHONY : src/Grafo.cpp.s
 
+src/No.o: src/No.cpp.o
+
+.PHONY : src/No.o
+
+# target to build an object file
+src/No.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/No.cpp.o
+.PHONY : src/No.cpp.o
+
+src/No.i: src/No.cpp.i
+
+.PHONY : src/No.i
+
+# target to preprocess a source file
+src/No.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/No.cpp.i
+.PHONY : src/No.cpp.i
+
+src/No.s: src/No.cpp.s
+
+.PHONY : src/No.s
+
+# target to generate assembly for a file
+src/No.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/No.cpp.s
+.PHONY : src/No.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,9 +243,15 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/Aresta.o"
+	@echo "... src/Aresta.i"
+	@echo "... src/Aresta.s"
 	@echo "... src/Grafo.o"
 	@echo "... src/Grafo.i"
 	@echo "... src/Grafo.s"
+	@echo "... src/No.o"
+	@echo "... src/No.i"
+	@echo "... src/No.s"
 .PHONY : help
 
 

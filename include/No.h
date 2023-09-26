@@ -11,10 +11,12 @@ class Aresta;
 class No {
 public:
     No(int idNo);
-    No(int idNo, int pesoNo);
-    virtual ~No();
+    ~No();
 
     int getIdNo () {return idNo;}
+
+    void setProxNo(No *no);
+    No * getProxNo();
 
 private:
     int idNo;

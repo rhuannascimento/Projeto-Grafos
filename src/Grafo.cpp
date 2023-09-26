@@ -1,10 +1,10 @@
 #include "../include/Grafo.h"
 
 // Construtor
-Grafo::Grafo(int ordem = 0)
+Grafo::Grafo()
 {
-    this->ordem = ordem;
-    /*this->numAresta = numAresta;
+    /*this->ordem = ordem;
+    this->numAresta = numAresta;
     this->digrafo = digrafo;
     this->weigthNo = weigthNo;
     this->weightArc = weightArc;*/
@@ -16,4 +16,24 @@ Grafo::~Grafo()
     // Faça qualquer limpeza de memória necessária aqui, se aplicável
 }
 
-// Função para incrementar a ordem
+No * Grafo::insereNo(int idNo){
+
+
+    No *novoNo = new No(idNo);
+
+    if(this->noRaiz == nullptr){
+        this->noRaiz = novoNo;
+        this->ultimoNo = novoNo;
+        return novoNo;
+    }
+
+    this->ultimoNo->setProxNo(novoNo);
+    this->ultimoNo = novoNo;
+    this->ultimoNo->setProxNo(nullptr);
+
+    return novoNo;
+
+}
+
+
+

@@ -16,31 +16,38 @@ class Grafo {
 public:
 
     //--- Construtor e Destrutor ---
-    Grafo(
-        int ordem
-    );
+    Grafo();
     ~Grafo();
 
     //--- Seters ---
-    void incOrdem();
-    void decOrdem();
+
 
     //--- Funcoes do No ---
-    bool procurarNoPeloId(int idFindNo);
-    No *insereNo(int idNo, int pesoNo);
-    bool removeNo(int idNo, bool isDigrafo);
+
+    No *insereNo(int idNo);
+   
 
     //--- Funcoes de Aresta ---
-    bool insertAresta(int idNoOrigem, int idNoDestino, int pesoAresta, bool weigthArc, bool isDirected);
-    bool removeAresta(int idNoOrigem, int idNoDestino, bool isDirected);
+  
     
 
     //--- Caracteristica do Grafo ---
-    int getNumAresta();
-    No *getNoRaiz();
-    int getOrdem();
-    int getGrauEntrada();
-    int getGrauSaida();
+    
+    void imprimeGrafo(){
+
+        if(this->noRaiz == nullptr){
+            return;
+        }
+        
+        cout<<"No raiz: "<< this->noRaiz->getIdNo() <<endl;
+        No * proxNo = this->noRaiz->getProxNo();
+
+        while(proxNo != nullptr){
+            cout<<proxNo->getIdNo()<<endl;
+            proxNo = proxNo->getProxNo();
+        }
+
+    }
 
 
 private:
@@ -52,6 +59,7 @@ private:
     bool weightArc;
 
     No *noRaiz;
+    No *ultimoNo;
 
 };
 
