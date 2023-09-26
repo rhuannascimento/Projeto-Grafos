@@ -1,3 +1,0 @@
-C:/Users/Rhuan/Desktop/Projeto-Grafos/build/CMakeFiles/main.dir
-C:/Users/Rhuan/Desktop/Projeto-Grafos/build/CMakeFiles/edit_cache.dir
-C:/Users/Rhuan/Desktop/Projeto-Grafos/build/CMakeFiles/rebuild_cache.dir
