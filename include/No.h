@@ -14,9 +14,12 @@ public:
     ~No();
 
     int getIdNo () {return idNo;}
+    No * getProxNo();
+    Aresta * getPrimeiraAresta(){return primeiraAresta;}
 
     void setProxNo(No *no);
-    No * getProxNo();
+    Aresta * insertAresta(int destino);
+
 
 private:
     int idNo;
@@ -24,7 +27,7 @@ private:
     int grauEntrada;
     int grauSaida;
     No *proxNo;
-    Aresta *primeiraAresta;
+    Aresta *primeiraAresta = nullptr;
     Aresta *ultimaAresta;
 };
 

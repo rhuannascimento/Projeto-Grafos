@@ -16,9 +16,13 @@ public:
 
     int getPesoAresta();
 
+    void setProxAresta(Aresta *aresta);
     
-    //Aresta *getProxAresta();
-    //void setProxAresta(Aresta *valor);
+    Aresta *getProxAresta(){
+        return proxAresta;
+    };
+
+    int getidNoDestino(){return idNoDestino;}
     
 private:
     int pesoAresta;
