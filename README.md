@@ -1,10 +1,3 @@
-# Rodar no windows
-
-- Instale g++ [link](https://www.youtube.com/watch?v=1Uw9EV4Te8M)
-- Instale cmake [link](https://www.youtube.com/watch?v=8_X5Iq9niDE)
-- Cole o conteudo de CmakeParaWindows.yxy em CMakeLists.txt
-- Rode o comando ./exec.bat ou exec.bat
-
 # Padrões a serem seguidos
 
 ## ******************************Padrões de GIT******************************
