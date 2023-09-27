@@ -1,3 +1,3 @@
 #!/bin/bash
-cd build && cmake .. && make && ./main ex1.txt
+rm -rf build && mkdir build && g++ main.cpp ./src/*.cpp -o ./build/main && ./build/main
 
