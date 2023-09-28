@@ -10,9 +10,16 @@ int main(int argc, char *argv[])
     cout << endl << "--------------------------------------------------------------------------------------------------" << endl << endl;
 
     Grafo *g = new Grafo();
-
    
-    ifstream arquivo("instancias_grafos_n_ponderados/ex1.txt"); // Abre o arquivo para leitura
+    ifstream arquivo; // Abre o arquivo para leitura
+
+    bool ponderado = (*argv[1] == '1') ? true : false;
+
+    if(ponderado){
+        arquivo.open("instancias_grafo_ponderados/ex1.txt");
+    }else{
+        arquivo.open("instancias_grafos_n_ponderados/ex1.txt");
+    }
     
 
     if (!arquivo.is_open())
@@ -31,15 +38,23 @@ int main(int argc, char *argv[])
         }
     }
 
-    
-
-    int a, b;
-    while (arquivo >> a >> b)
+    int a, b, c;
+    while (!ponderado && arquivo >> a >> b)
     {
         g->insereAresta(a, b);
         g->insereAresta(b, a);
         break;
     }
+
+    while (arquivo >> a >> b >> c && ponderado)
+    {
+
+        g->insereArestaPonderada(a, b, c);
+        g->insereArestaPonderada(b, a, c);
+        break;
+    }
+
+
     g->imprimeGrafo();
 
     arquivo.close(); // Fecha o arquivo

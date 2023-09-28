@@ -5,11 +5,15 @@ Aresta::Aresta(int idNoDestino){
 }
 
 
-Aresta::Aresta(int noDestino, int pesoAresta){
+Aresta::Aresta(int idNoDestino, int pesoAresta){
     this->idNoDestino = idNoDestino;
     this->pesoAresta = pesoAresta;
 }
 
 void Aresta::setProxAresta(Aresta *aresta){
     this->proxAresta = aresta;
+}
+
+int Aresta::getPesoAresta(){
+    return this->pesoAresta;
 }

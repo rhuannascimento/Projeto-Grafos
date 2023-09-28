@@ -51,7 +51,7 @@ void Grafo::imprimeGrafo(){
             aresta = proxNo->getPrimeiraAresta();
             while (aresta != nullptr)
             {
-                 cout<<aresta->getidNoDestino()<<" - ";
+                 cout<<aresta->getidNoDestino()<<", "<<aresta->getPesoAresta()<<" - ";
                  aresta = aresta->getProxAresta();
             }
 
@@ -84,5 +84,13 @@ Aresta * Grafo::insereAresta(int noOrigem, int noDestino){
     No *origem = this->buscaNo(noOrigem);
 
     return origem->insertAresta(noDestino);
+
+}
+
+Aresta * Grafo::insereArestaPonderada(int noOrigem, int noDestino, int peso){
+
+    No *origem = this->buscaNo(noOrigem);
+
+    return origem->insertArestaPonderada(noDestino, peso);
 
 }

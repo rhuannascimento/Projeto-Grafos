@@ -29,7 +29,8 @@ public:
 
     //--- Funcoes de Aresta ---
   
-    Aresta *insereAresta(int noOrigem, int noDestino);
+    Aresta * insereAresta(int noOrigem, int noDestino);
+    Aresta * insereArestaPonderada(int noOrigem, int noDestino, int peso);
 
     //--- Caracteristica do Grafo ---
     
