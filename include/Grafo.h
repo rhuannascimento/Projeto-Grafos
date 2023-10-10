@@ -17,10 +17,16 @@ public:
 
     //--- Construtor e Destrutor ---
     Grafo();
+    Grafo(bool digrafo);
     ~Grafo();
 
     //--- Seters ---
 
+
+    //--- Getter ---
+    bool isDIgrafo(){
+        return this->digrafo;
+    }
 
     //--- Funcoes do No ---
 
@@ -29,7 +35,7 @@ public:
 
     //--- Funcoes de Aresta ---
   
-    Aresta *insereAresta(int noOrigem, int noDestino);
+    bool insereAresta(int noOrigem, int noDestino);
 
     //--- Caracteristica do Grafo ---
     
@@ -42,11 +48,9 @@ private:
     int ordem;
     int numAresta;
     bool digrafo;
-    bool weigthNo;
-    bool weightArc;
 
-    No *noRaiz;
-    No *ultimoNo;
+    No *noRaiz = nullptr;
+    No *ultimoNo = nullptr;
 
 };
 

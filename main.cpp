@@ -8,22 +8,26 @@ using namespace std;
 int main(int argc, char* argv[]) {
     cout <<endl << "--------------------------------------------------------------------------------------------------" << endl<< endl;
 
-    Grafo * g = new Grafo();
+    Grafo * g = new Grafo(false);
 
 
 
-    g->insereNo(2);
-    g->insereNo(4);
-    g->insereNo(5);
-    g->insereNo(6);
-    g->insereNo(7);
+    ifstream archive("./instancias_grafos_n_ponderados/ex1.txt");
 
-    g->insereAresta(4, 2);
-    g->insereAresta(4, 5);
-    g->insereAresta(2, 4);
+    if (!archive.is_open()) {
+        cerr << "Erro ao abrir o arquivo "<< endl;
+        return 1;
+    }
+
+    int no_origem, no_destino;
+    int n_nos;
+    archive >> n_nos;
+
+    while (archive >> no_origem >> no_destino) {
+        g->insereAresta(no_origem, no_destino);
+    }
 
     g->imprimeGrafo();
-
 
     /*string archive_name = argv[1];
     ifstream archive("../instancias_grafos_n_ponderados/" + archive_name);
@@ -36,7 +40,8 @@ int main(int argc, char* argv[]) {
         cout<< line << endl;
         break;
     }
-    archive.close();*/
+    */
 
+    archive.close();
     return 0;
 }

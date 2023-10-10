@@ -4,6 +4,9 @@ No::No(int idNo){
     this->idNo = idNo;
 }
 
+int No::getIdNo(){
+    return idNo;
+}
 
 void No::setProxNo(No *no){
     this->proxNo = no;

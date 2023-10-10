@@ -13,7 +13,7 @@ public:
     No(int idNo);
     ~No();
 
-    int getIdNo () {return idNo;}
+    int getIdNo ();
     No * getProxNo();
     Aresta * getPrimeiraAresta(){return primeiraAresta;}
 
@@ -22,7 +22,7 @@ public:
 
 
 private:
-    int idNo;
+    int idNo = -1;
     int pesoNo;
     int grauEntrada;
     int grauSaida;
