@@ -9,55 +9,26 @@ int main(int argc, char *argv[])
 {
     cout << endl << "--------------------------------------------------------------------------------------------------" << endl << endl;
 
-    Grafo *g = new Grafo();
-   
-    ifstream arquivo; // Abre o arquivo para leitura
+    Grafo * g = new Grafo(false);
 
-    bool ponderado = (*argv[1] == '1') ? true : false;
+    ifstream archive("./instancias_grafos_n_ponderados/ex1.txt");
 
-    if(ponderado){
-        arquivo.open("instancias_grafo_ponderados/ex1.txt");
-    }else{
-        arquivo.open("instancias_grafos_n_ponderados/ex1.txt");
-    }
-    
-
-    if (!arquivo.is_open())
-    {
-        cout << "Erro ao abrir o arquivo." << std::endl;
+    if (!archive.is_open()) {
+        cerr << "Erro ao abrir o arquivo "<< endl;
         return 1;
     }
 
-    int nodeNumbers;
+    int no_origem, no_destino;
+    int n_nos;
+    archive >> n_nos;
 
-    if (arquivo >> nodeNumbers)
-    {
-        for (int i = 1; i < nodeNumbers; i++)
-        {
-            g->insereNo(i);
-        }
+    while (archive >> no_origem >> no_destino) {
+        g->insereAresta(no_origem, no_destino);
     }
-
-    int a, b, c;
-    while (!ponderado && arquivo >> a >> b)
-    {
-        g->insereAresta(a, b);
-        g->insereAresta(b, a);
-        break;
-    }
-
-    while (arquivo >> a >> b >> c && ponderado)
-    {
-
-        g->insereArestaPonderada(a, b, c);
-        g->insereArestaPonderada(b, a, c);
-        break;
-    }
-
 
     g->imprimeGrafo();
 
-    arquivo.close(); // Fecha o arquivo
 
+    archive.close();
     return 0;
 }

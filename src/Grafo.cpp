@@ -1,11 +1,12 @@
 #include "../include/Grafo.h"
 
 // Construtor
-Grafo::Grafo()
+Grafo::Grafo(bool digrafo)
 {
+    this->digrafo = digrafo;
     /*this->ordem = ordem;
     this->numAresta = numAresta;
-    this->digrafo = digrafo;
+    
     this->weigthNo = weigthNo;
     this->weightArc = weightArc;*/
 }
@@ -36,6 +37,7 @@ No * Grafo::insereNo(int idNo){
 
 }
 
+
 void Grafo::imprimeGrafo(){
 
         if(this->noRaiz == nullptr){
@@ -51,7 +53,7 @@ void Grafo::imprimeGrafo(){
             aresta = proxNo->getPrimeiraAresta();
             while (aresta != nullptr)
             {
-                 cout<<aresta->getidNoDestino()<<", "<<aresta->getPesoAresta()<<" - ";
+                 cout<<aresta->getidNoDestino()<<" - ";
                  aresta = aresta->getProxAresta();
             }
 
@@ -64,13 +66,18 @@ void Grafo::imprimeGrafo(){
 
 
 No *Grafo::buscaNo(int no){
+
+    if(this->noRaiz == nullptr){
+        insereNo(no);
+    }
+
     if(this->noRaiz->getIdNo() == no){
         return this->noRaiz;
     }
 
     No * noBusca = this->noRaiz->getProxNo();
 
-    while(noBusca->getIdNo() != no){
+    while(noBusca != nullptr && noBusca->getIdNo() != no){
         noBusca = noBusca->getProxNo();
     }
 
@@ -79,18 +86,28 @@ No *Grafo::buscaNo(int no){
 }
 
 
-Aresta * Grafo::insereAresta(int noOrigem, int noDestino){
+bool Grafo::insereAresta(int noOrigem, int noDestino){
 
     No *origem = this->buscaNo(noOrigem);
+    No *destino = this->buscaNo(noDestino);
 
-    return origem->insertAresta(noDestino);
+    if(origem==nullptr){
+        origem = insereNo(noOrigem);
+    }
+
+    if(destino==nullptr){
+        destino = insereNo(noDestino);
+    }
+
+    if(this->isDIgrafo()){
+        origem->insertAresta(noDestino);
+    }else{
+        origem->insertAresta(noDestino);
+        destino->insertAresta(noOrigem);
+    }
+
+    return true;
+
 
 }
 
-Aresta * Grafo::insereArestaPonderada(int noOrigem, int noDestino, int peso){
-
-    No *origem = this->buscaNo(noOrigem);
-
-    return origem->insertArestaPonderada(noDestino, peso);
-
-}

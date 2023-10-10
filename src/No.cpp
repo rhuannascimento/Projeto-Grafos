@@ -4,6 +4,9 @@ No::No(int idNo){
     this->idNo = idNo;
 }
 
+int No::getIdNo(){
+    return idNo;
+}
 
 void No::setProxNo(No *no){
     this->proxNo = no;
@@ -31,19 +34,3 @@ Aresta * No::insertAresta(int destino){
 }
 
 
-Aresta * No::insertArestaPonderada(int destino, int peso){
-    Aresta *novaAresta = new Aresta(destino, peso);
-
-    if(this->primeiraAresta == nullptr){
-        this->primeiraAresta = novaAresta;
-        this->ultimaAresta = novaAresta;
-        novaAresta->setProxAresta(nullptr);
-        return novaAresta;
-    }
-
-    this->ultimaAresta->setProxAresta(novaAresta);
-    this->ultimaAresta = novaAresta;
-    novaAresta->setProxAresta(nullptr);
-
-    return novaAresta;
-}
