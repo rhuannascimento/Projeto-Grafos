@@ -33,4 +33,20 @@ Aresta * No::insertAresta(int destino){
     return novaAresta;
 }
 
+Aresta * No::insertAresta(int destino, int peso){
+    Aresta *novaAresta = new Aresta(destino, peso);
+
+    if(this->primeiraAresta == nullptr){
+        this->primeiraAresta = novaAresta;
+        this->ultimaAresta = novaAresta;
+        novaAresta->setProxAresta(nullptr);
+        return novaAresta;
+    }
+
+    this->ultimaAresta->setProxAresta(novaAresta);
+    this->ultimaAresta = novaAresta;
+    novaAresta->setProxAresta(nullptr);
+
+    return novaAresta;
+}
 

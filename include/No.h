@@ -19,7 +19,7 @@ public:
 
     void setProxNo(No *no);
     Aresta * insertAresta(int destino);
-    Aresta * insertArestaPonderada(int destino, int peso);
+    Aresta * insertAresta(int destino, int peso);
 
 
 private:

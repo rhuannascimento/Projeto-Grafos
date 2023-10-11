@@ -1,9 +1,11 @@
 #include "../include/Grafo.h"
+#include "../include/Aresta.h"
 
 // Construtor
-Grafo::Grafo(bool digrafo)
+Grafo::Grafo(bool digrafo, bool ponderado)
 {
     this->digrafo = digrafo;
+    this->ponderado = ponderado;
     /*this->ordem = ordem;
     this->numAresta = numAresta;
     
@@ -48,13 +50,20 @@ void Grafo::imprimeGrafo(){
         Aresta *aresta = proxNo->getPrimeiraAresta();
 
         while(proxNo != nullptr){
-            cout<<proxNo->getIdNo()<<" - ";
+
+            cout << "|" << proxNo->getIdNo()<<"| => ";
 
             aresta = proxNo->getPrimeiraAresta();
             while (aresta != nullptr)
             {
-                 cout<<aresta->getidNoDestino()<<" - ";
-                 aresta = aresta->getProxAresta();
+                if(this->ponderado){
+                    cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
+                    aresta = aresta->getProxAresta();
+                }else{
+                    cout<< aresta->getIdNoDestino()<<" => ";
+                    aresta = aresta->getProxAresta();
+                }
+                 
             }
 
             cout<<endl;
@@ -85,6 +94,30 @@ No *Grafo::buscaNo(int no){
 
 }
 
+bool Grafo::insereAresta(int noOrigem, int noDestino, int peso){
+
+    No *origem = this->buscaNo(noOrigem);
+    No *destino = this->buscaNo(noDestino);
+
+    if(origem==nullptr){
+        origem = insereNo(noOrigem);
+    }
+
+    if(destino==nullptr){
+        destino = insereNo(noDestino);
+    }
+
+    if(this->isDIgrafo()){
+        origem->insertAresta(noDestino, peso);
+    }else{
+        origem->insertAresta(noDestino, peso);
+        destino->insertAresta(noOrigem, peso);
+    }
+
+    return true;
+
+
+}
 
 bool Grafo::insereAresta(int noOrigem, int noDestino){
 

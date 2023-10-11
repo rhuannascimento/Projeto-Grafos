@@ -22,7 +22,7 @@ public:
         return proxAresta;
     };
 
-    int getidNoDestino(){return idNoDestino;}
+    int getIdNoDestino(){return idNoDestino;}
     
 private:
     int pesoAresta;
