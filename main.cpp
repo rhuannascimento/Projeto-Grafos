@@ -38,13 +38,8 @@ int main(int argc, char *argv[])
         break;
     }
 
-
-    Grafo * g = new Grafo(digrafo, ponderado);
-
-    cout << digrafo << ponderado<< endl;
-
     ifstream archive;
-    archive.open("instancias_grafo_ponderados/ex1.txt");
+    archive.open("instancias_grafos_n_ponderados/ex1.txt");
 
 
     if (!archive.is_open()) {
@@ -53,19 +48,22 @@ int main(int argc, char *argv[])
     }
 
     int no_origem, no_destino;
-    int n_nos;
+    int ordem;
     int peso;
-    archive >> n_nos;
+    archive >> ordem;
 
-    while (archive >> no_origem >> no_destino && !ponderado) {
+    Grafo * g = new Grafo(digrafo, ponderado, ordem);
+
+    while (!ponderado && archive >> no_origem >> no_destino) {
         g->insereAresta(no_origem, no_destino);
     }
-    while (archive >> no_origem >> no_destino >> peso && ponderado) {
+    while (ponderado && archive >> no_origem >> no_destino >> peso) {
         g->insereAresta(no_origem, no_destino, peso);
     }
 
     g->imprimeGrafo();
 
+    g->fechoTransitivoDireto(7);
 
     archive.close();
     return 0;

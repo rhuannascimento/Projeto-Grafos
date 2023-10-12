@@ -1,16 +1,18 @@
 #include "../include/Grafo.h"
 #include "../include/Aresta.h"
 
+
 // Construtor
-Grafo::Grafo(bool digrafo, bool ponderado)
+Grafo::Grafo(bool digrafo, bool ponderado, int ordem)
 {
     this->digrafo = digrafo;
     this->ponderado = ponderado;
-    /*this->ordem = ordem;
+    this->ordem = ordem;
+    /*
     this->numAresta = numAresta;
-    
     this->weigthNo = weigthNo;
-    this->weightArc = weightArc;*/
+    this->weightArc = weightArc;
+    */
 }
 
 // Destrutor
@@ -144,3 +146,44 @@ bool Grafo::insereAresta(int noOrigem, int noDestino){
 
 }
 
+void Grafo::fechoTransitivoDireto(int idNo) {
+    No* noOrigem = buscaNo(idNo);
+
+    if (noOrigem == nullptr) {
+        cout << "Nó de origem não encontrado." << endl;
+        return;
+    }
+
+    // Usando uma pilha para a busca em profundidade
+    stack<No*> pilha;
+    pilha.push(noOrigem);
+
+    // Vetor para marcar nós visitados
+    vector<bool> visitados(ordem, false);
+
+    cout << "Fecho Transitivo Direto do nó " << idNo << ": ";
+
+    while (!pilha.empty()) {
+        No* noAtual = pilha.top();
+        pilha.pop();
+
+        // Marcar o nó como visitado
+        visitados[noAtual->getIdNo()] = true;
+
+        cout << noAtual->getIdNo() << " ";
+
+        // Percorrer as arestas saindo desse nó
+        Aresta* aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr) {
+            No* noDestino = buscaNo(aresta->getIdNoDestino());
+
+            if (!visitados[noDestino->getIdNo()]) {
+                pilha.push(noDestino);
+            }
+
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+    cout << endl;
+}

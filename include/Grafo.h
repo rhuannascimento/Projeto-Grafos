@@ -5,7 +5,8 @@
 #include <sstream>
 #include "No.h"
 #include "Aresta.h"
-
+#include <vector>
+#include <stack>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ public:
 
     //--- Construtor e Destrutor ---
     Grafo();
-    Grafo(bool digrafo, bool ponderado);
+    Grafo(bool digrafo, bool ponderado, int ordem);
     ~Grafo();
 
     //--- Seters ---
@@ -42,6 +43,7 @@ public:
     
     void imprimeGrafo();
     No *buscaNo(int no);
+    void fechoTransitivoDireto(int idNo);
 
 
 private:
