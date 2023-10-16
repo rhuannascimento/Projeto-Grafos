@@ -9,6 +9,7 @@
 #include <stack>
 #include <queue>
 #include <set>
+#include <limits>
 
 using namespace std;
 
@@ -49,6 +50,9 @@ public:
     void fechoTransitivoIndireto(int idNo);
     bool existeCaminho(No* origem, No* destino);
     bool buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados);
+
+    void dijkstra(int origem, int destino);
+   
 
 private:
 

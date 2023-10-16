@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     }
 
     ifstream archive;
-    archive.open("instancias_grafos_n_ponderados/ex1.txt");
+    archive.open("instancias_grafo_ponderados/ex1.txt");
 
 
     if (!archive.is_open()) {
@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
     // cout << "|9| Sair das funcionalidades" << endl;
 
     g->fechoTransitivoIndireto(7);
+    g->dijkstra(8, 5);
 
     archive.close();
     return 0;

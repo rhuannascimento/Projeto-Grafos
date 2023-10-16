@@ -240,3 +240,63 @@ void Grafo::fechoTransitivoIndireto(int idNo) {
     cout << endl;
 }
 
+//////////////////////////////////////////////////
+
+#include <vector>
+#include <queue>
+#include <limits>
+
+// ...
+
+void Grafo::dijkstra(int origem, int destino) {
+    // Verifique se os vértices de origem e destino existem no grafo
+    No* noOrigem = buscaNo(origem);
+    No* noDestino = buscaNo(destino);
+
+    if (noOrigem == nullptr || noDestino == nullptr) {
+        cout << "Nó de origem ou destino não encontrado." << endl;
+        return;
+    }
+
+    // Vetor para rastrear as distâncias mínimas
+    vector<int> distanciaMinima(ordem, numeric_limits<int>::max());
+
+    // Defina a distância mínima para o vértice de origem como 0
+    distanciaMinima[origem] = 0;
+
+    // Use uma fila de prioridade para escolher os vértices com a menor distância
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
+    filaPrioridade.push(make_pair(0, origem));
+
+    while (!filaPrioridade.empty()) {
+        int u = filaPrioridade.top().second;
+        filaPrioridade.pop();
+
+        // Percorra as arestas do vértice atual
+        Aresta* aresta = buscaNo(u)->getPrimeiraAresta();
+        while (aresta != nullptr) {
+            int v = aresta->getIdNoDestino();
+            int peso = aresta->getPesoAresta();
+
+            // Se a distância mínima até 'v' pode ser melhorada passando por 'u', atualize-a
+            if (distanciaMinima[u] + peso < distanciaMinima[v]) {
+                distanciaMinima[v] = distanciaMinima[u] + peso;
+                filaPrioridade.push(make_pair(distanciaMinima[v], v));
+            }
+
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+    // A partir deste ponto, o vetor distanciaMinima contém as distâncias mínimas de 'origem' para todos os vértices.
+    // Você pode usar esse vetor para determinar a distância mínima para o vértice de destino.
+
+    int distanciaDestino = distanciaMinima[destino];
+    if (distanciaDestino == numeric_limits<int>::max()) {
+        cout << "Não há caminho entre o vértice de origem e o vértice de destino." << endl;
+    } else {
+        cout << "A distância mínima de " << origem << " para " << destino << " é " << distanciaDestino << endl;
+    }
+}
+
+// ...
