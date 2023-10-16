@@ -7,6 +7,8 @@
 #include "Aresta.h"
 #include <vector>
 #include <stack>
+#include <queue>
+#include <set>
 
 using namespace std;
 
@@ -44,7 +46,9 @@ public:
     void imprimeGrafo();
     No *buscaNo(int no);
     void fechoTransitivoDireto(int idNo);
-
+    void fechoTransitivoIndireto(int idNo);
+    bool existeCaminho(No* origem, No* destino);
+    bool buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados);
 
 private:
 

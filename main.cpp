@@ -62,8 +62,16 @@ int main(int argc, char *argv[])
     }
 
     g->imprimeGrafo();
+    
+    //================================================================================================================
+    // FUNCIONALIDADES
+    //================================================================================================================
+    // cout << endl << "Funcionalidades:" << endl;
+    // cout << "|0| Imprimir Grafo" << endl;
+    // cout << "|1| Fecho transitivo direto" << endl;
+    // cout << "|9| Sair das funcionalidades" << endl;
 
-    g->fechoTransitivoDireto(7);
+    g->fechoTransitivoIndireto(7);
 
     archive.close();
     return 0;

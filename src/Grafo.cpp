@@ -187,3 +187,56 @@ void Grafo::fechoTransitivoDireto(int idNo) {
 
     cout << endl;
 }
+
+
+bool Grafo::existeCaminho(No* origem, No* destino) {
+ 
+    vector<bool> visitados(ordem, false);
+
+    return buscaEmProfundidade(origem, destino, visitados);
+}
+
+bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados) {
+
+    visitados[origem->getIdNo()] = true;
+
+    if (origem == destino) {
+        return true;
+    }
+
+    Aresta* aresta = origem->getPrimeiraAresta();
+    while (aresta != nullptr) {
+        No* proximoNo = buscaNo(aresta->getIdNoDestino());
+
+        if (!visitados[proximoNo->getIdNo()] && buscaEmProfundidade(proximoNo, destino, visitados)) {
+            return true;
+        }
+
+        aresta = aresta->getProxAresta();
+    }
+
+    return false;
+}
+
+void Grafo::fechoTransitivoIndireto(int idNo) {
+    cout << "Fecho Transitivo Indireto do nó " << idNo << ": ";
+
+    No* noOrigem = buscaNo(idNo);
+
+    if (noOrigem == nullptr) {
+        cout << "Nó de origem não encontrado." << endl;
+        return;
+    }
+
+    No* proxNo = this->noRaiz;
+
+    while (proxNo != nullptr) {
+        if (proxNo->getIdNo() != noOrigem->getIdNo() && existeCaminho(noOrigem, proxNo)) {
+            cout << proxNo->getIdNo() << " ";
+        }
+        proxNo = proxNo->getProxNo();
+    }
+
+    cout << endl;
+}
+
