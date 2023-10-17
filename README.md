@@ -40,7 +40,7 @@ apresentadas a seguir.
 O programa deve oferecer as seguintes funcionalidades:
 - [x] Fecho transitivo direto de um vértice.
 - [x] Fecho transitivo indireto de um vértice.
-- Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
+- [x]Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
 - Caminho mínimo entre dois vértices usando algoritmo de Floyd.
 - Árvore Geradora Mínima usando o algoritmo de Prim.
 - Árvore Geradora Mínima usando o algoritmo de Kruskal.
