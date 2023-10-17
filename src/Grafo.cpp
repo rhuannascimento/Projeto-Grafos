@@ -240,14 +240,6 @@ void Grafo::fechoTransitivoIndireto(int idNo) {
     cout << endl;
 }
 
-//////////////////////////////////////////////////
-
-#include <vector>
-#include <queue>
-#include <limits>
-
-// ...
-
 void Grafo::dijkstra(int origem, int destino) {
     // Verifique se os vértices de origem e destino existem no grafo
     No* noOrigem = buscaNo(origem);
@@ -299,4 +291,3 @@ void Grafo::dijkstra(int origem, int destino) {
     }
 }
 
-// ...

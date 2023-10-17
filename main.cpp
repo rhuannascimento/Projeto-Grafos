@@ -6,6 +6,45 @@
 
 using namespace std;
 
+void execFunc(Grafo *g, int opt){
+
+    int no;
+    int destino;
+
+    cout<<"Executando a opção " << opt << ":" << endl;
+
+    switch (opt)
+    {
+    case 1:    
+        g->imprimeGrafo();
+    break;
+    
+    case 2:
+        cout << "Qual nó você deseja encontrar o fecho transitivo direto?" << endl;
+        cin >> no;
+        g->fechoTransitivoDireto(no);
+    break;
+        
+    case 3:
+        cout << "Qual nó você deseja encontrar o fecho transitivo indireto?" << endl;
+        cin >> no;
+        g->fechoTransitivoIndireto(no);
+    break;
+
+    case 4:
+        cout << "De qual nó você deseja partir?" << endl;
+        cin >> no;
+        cout << "A qual nó você deseja chegar?" << endl;
+        cin >> destino;
+        g->dijkstra(no, destino);
+    break;
+
+    default:
+        return;
+    }
+
+}
+
 int main(int argc, char *argv[])
 {
     cout << endl << "--------------------------------------------------------------------------------------------------" << endl << endl;
@@ -60,19 +99,36 @@ int main(int argc, char *argv[])
     while (ponderado && archive >> no_origem >> no_destino >> peso) {
         g->insereAresta(no_origem, no_destino, peso);
     }
-
-    g->imprimeGrafo();
     
     //================================================================================================================
     // FUNCIONALIDADES
     //================================================================================================================
-    // cout << endl << "Funcionalidades:" << endl;
-    // cout << "|0| Imprimir Grafo" << endl;
-    // cout << "|1| Fecho transitivo direto" << endl;
-    // cout << "|9| Sair das funcionalidades" << endl;
 
-    g->fechoTransitivoIndireto(7);
-    g->dijkstra(8, 5);
+    bool quit = false;
+
+
+    while(!quit){
+        int option;
+        cout << endl << "Funcionalidades:" << endl;
+        cout << "|1| Imprimir Grafo." << endl;
+        cout << "|2| Fecho transitivo direto." << endl;
+        cout << "|3| Fecho transitivo indireto." << endl;
+        cout << "|4| Caminho minimo por Dijkstra." << endl;
+        cout << "|0| Sair das funcionalidades." << endl;
+        cout << "Insira a opção: ";
+        cin >> option;
+        cout<<endl;
+
+        switch (option)
+        {
+        case 0:
+            quit = true;
+            break;
+        default:
+            execFunc(g, option);
+            break;
+        }
+    }
 
     archive.close();
     return 0;
