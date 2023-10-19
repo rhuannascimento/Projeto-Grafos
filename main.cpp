@@ -39,6 +39,14 @@ void execFunc(Grafo *g, int opt){
         g->dijkstra(no, destino);
     break;
 
+    case 5:
+        cout << "De qual nó você deseja partir?" << endl;
+        cin >> no;
+        cout << "A qual nó você deseja chegar?" << endl;
+        cin >> destino;
+        g->floyd(no, destino);
+    break;
+
     default:
         return;
     }
@@ -114,6 +122,7 @@ int main(int argc, char *argv[])
         cout << "|2| Fecho transitivo direto." << endl;
         cout << "|3| Fecho transitivo indireto." << endl;
         cout << "|4| Caminho minimo por Dijkstra." << endl;
+        cout << "|5| Caminho minimo por floyd." << endl;
         cout << "|0| Sair das funcionalidades." << endl;
         cout << "Insira a opção: ";
         cin >> option;

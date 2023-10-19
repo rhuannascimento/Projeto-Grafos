@@ -291,3 +291,28 @@ void Grafo::dijkstra(int origem, int destino) {
     }
 }
 
+void Grafo::floyd(int origem, int destino) {
+    vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
+
+    for (int i = 1; i <= ordem; i++) {
+        distancia[i][i] = 0;
+        Aresta* aresta = buscaNo(i)->getPrimeiraAresta();
+        while (aresta != nullptr) {
+            distancia[i][aresta->getIdNoDestino()] = aresta->getPesoAresta();
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+    for (int k = 1; k <= ordem; k++) {
+        for (int i = 1; i <= ordem; i++) {
+            for (int j = 1; j <= ordem; j++) {
+                if (distancia[i][k] != INT_MAX && distancia[k][j] != INT_MAX &&
+                    distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                    distancia[i][j] = distancia[i][k] + distancia[k][j];
+                }
+            }
+        }
+    }
+
+    cout << "Distância mínima entre " << origem << " e " << destino << ": " << distancia[origem][destino] << endl;
+}

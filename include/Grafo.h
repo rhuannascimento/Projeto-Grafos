@@ -9,6 +9,7 @@
 #include <stack>
 #include <queue>
 #include <set>
+#include <climits>
 #include <limits>
 
 using namespace std;
@@ -52,6 +53,7 @@ public:
     bool buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados);
 
     void dijkstra(int origem, int destino);
+    void floyd(int origem, int destino);
    
 
 private:
