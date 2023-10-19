@@ -314,5 +314,9 @@ void Grafo::floyd(int origem, int destino) {
         }
     }
 
-    cout << "Distância mínima entre " << origem << " e " << destino << ": " << distancia[origem][destino] << endl;
+    if(!(distancia[origem][destino] == INT_MAX)){
+        cout << "Distância mínima entre " << origem << " e " << destino << ": " << distancia[origem][destino] << endl;
+    }else{
+        cout<< "Esse cmainho não existe" << endl;
+    }
 }
