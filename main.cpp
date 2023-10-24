@@ -2,6 +2,9 @@
 #include <fstream>
 #include <string>
 #include <bits/stdc++.h> 
+#include <iostream>
+#include <fstream>
+#include <filesystem>
 #include "include/Grafo.h"
 
 using namespace std;
@@ -53,58 +56,52 @@ void execFunc(Grafo *g, int opt){
 
 }
 
+//<arquivo_entrada> <arquivo_saida> <Opc_Direc> <Opc_Peso_Aresta> <Opc_Peso_Nos>,
 int main(int argc, char *argv[])
 {
     cout << endl << "--------------------------------------------------------------------------------------------------" << endl << endl;
 
     bool digrafo = false;
     bool ponderado = false;
-    string archive_name = "ex1.txt";
-    string diretory = "./instancias_grafos_ponderados/";
-    diretory.append(archive_name);
-
+    bool pesoNo = false;
     
 
     switch (argc)
     {
-    case 2:
-        digrafo = (*argv[1] == '1') ? true : false;
-        break;
-    case 3:
-        digrafo = (*argv[1] == '1') ? true : false;
-        ponderado = (*argv[2] == '1') ? true : false;
-        break;
-
     case 4:
-        digrafo = (*argv[1] == '1') ? true : false;
-        ponderado = (*argv[2] == '1') ? true : false;
-        archive_name = *argv[3];
+        digrafo = (*argv[3] == '1') ? true : false;
         break;
-    
+    case 5:
+        digrafo = (*argv[3] == '1') ? true : false;
+        ponderado = (*argv[4] == '1') ? true : false;
+        break;
+    // case 4:
+    //     digrafo = (*argv[3] == '1') ? true : false;
+    //     ponderado = (*argv[4] == '1') ? true : false;
+    //     pesoNo = (*argv[5] == '1') ? true : false;
+    //     break;
     default:
         break;
     }
 
-    ifstream archive;
-    archive.open("instancias_grafo_ponderados/ex1.txt");
-
-
-    if (!archive.is_open()) {
-        cout << "Erro ao abrir o arquivo "<< endl;
+    string arquivo_entrada = argv[1];
+    ifstream input_file(arquivo_entrada);
+    if (!input_file.is_open()) {
+        std::cerr << "Não foi possível abrir o arquivo de entrada: " << arquivo_entrada << std::endl;
         return 1;
     }
 
     int no_origem, no_destino;
     int ordem;
     int peso;
-    archive >> ordem;
+    input_file >> ordem;
 
     Grafo * g = new Grafo(digrafo, ponderado, ordem);
 
-    while (!ponderado && archive >> no_origem >> no_destino) {
+    while (!ponderado && input_file >> no_origem >> no_destino) {
         g->insereAresta(no_origem, no_destino);
     }
-    while (ponderado && archive >> no_origem >> no_destino >> peso) {
+    while (ponderado && input_file >> no_origem >> no_destino >> peso) {
         g->insereAresta(no_origem, no_destino, peso);
     }
     
@@ -139,6 +136,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    archive.close();
+    input_file.close();
     return 0;
 }
