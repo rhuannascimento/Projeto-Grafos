@@ -146,12 +146,14 @@ bool Grafo::insereAresta(int noOrigem, int noDestino){
 
 }
 
-void Grafo::fechoTransitivoDireto(int idNo) {
+string Grafo::fechoTransitivoDireto(int idNo) {
     No* noOrigem = buscaNo(idNo);
+    string fechoDireto;
 
     if (noOrigem == nullptr) {
-        cout << "Nó de origem não encontrado." << endl;
-        return;
+        //cout << "Nó de origem não encontrado." << endl;
+        fechoDireto += "Nó de origem (" + to_string(idNo) + ") não encontrado.\n";
+        return fechoDireto;
     }
 
     // Usando uma pilha para a busca em profundidade
@@ -161,8 +163,10 @@ void Grafo::fechoTransitivoDireto(int idNo) {
     // Vetor para marcar nós visitados
     vector<bool> visitados(ordem, false);
 
-    cout << "Fecho Transitivo Direto do nó " << idNo << ": ";
+    //cout << "Fecho Transitivo Direto do nó " << idNo << ": ";
+    fechoDireto = "Fecho Transitivo Direto do nó " + to_string(idNo) + ": ";
 
+    
     while (!pilha.empty()) {
         No* noAtual = pilha.top();
         pilha.pop();
@@ -170,7 +174,8 @@ void Grafo::fechoTransitivoDireto(int idNo) {
         // Marcar o nó como visitado
         visitados[noAtual->getIdNo()] = true;
 
-        cout << noAtual->getIdNo() << " ";
+        //cout << noAtual->getIdNo() << " ";
+        fechoDireto += std::to_string(noAtual->getIdNo()) + ' ';
 
         // Percorrer as arestas saindo desse nó
         Aresta* aresta = noAtual->getPrimeiraAresta();
@@ -184,8 +189,8 @@ void Grafo::fechoTransitivoDireto(int idNo) {
             aresta = aresta->getProxAresta();
         }
     }
-
-    cout << endl;
+    fechoDireto += "\n";
+    return fechoDireto;
 }
 
 
@@ -218,36 +223,42 @@ bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados
     return false;
 }
 
-void Grafo::fechoTransitivoIndireto(int idNo) {
-    cout << "Fecho Transitivo Indireto do nó " << idNo << ": ";
+string Grafo::fechoTransitivoIndireto(int idNo) {
+    string fechoDireto;
+
+
+    fechoDireto += "Fecho Transitivo Indireto do nó " + to_string(idNo) + ": ";
 
     No* noOrigem = buscaNo(idNo);
 
     if (noOrigem == nullptr) {
-        cout << "Nó de origem não encontrado." << endl;
-        return;
+        fechoDireto += "Nó de origem não encontrado.\n";
+        return fechoDireto;
     }
 
     No* proxNo = this->noRaiz;
 
     while (proxNo != nullptr) {
         if (proxNo->getIdNo() != noOrigem->getIdNo() && existeCaminho(noOrigem, proxNo)) {
-            cout << proxNo->getIdNo() << " ";
+            fechoDireto += to_string(proxNo->getIdNo()) + " ";
         }
         proxNo = proxNo->getProxNo();
     }
-
-    cout << endl;
+    fechoDireto += "\n";
+    
+    return fechoDireto;
 }
 
-void Grafo::dijkstra(int origem, int destino) {
+string Grafo::dijkstra(int origem, int destino) {
     // Verifique se os vértices de origem e destino existem no grafo
     No* noOrigem = buscaNo(origem);
     No* noDestino = buscaNo(destino);
+    string fechoDireto;
+
 
     if (noOrigem == nullptr || noDestino == nullptr) {
-        cout << "Nó de origem ou destino não encontrado." << endl;
-        return;
+        fechoDireto += "Nó de origem ou destino não encontrado.\n";
+        return fechoDireto; 
     }
 
     // Vetor para rastrear as distâncias mínimas
@@ -285,13 +296,15 @@ void Grafo::dijkstra(int origem, int destino) {
 
     int distanciaDestino = distanciaMinima[destino];
     if (distanciaDestino == numeric_limits<int>::max()) {
-        cout << "Não há caminho entre o vértice de origem e o vértice de destino." << endl;
+        fechoDireto +="Não há caminho entre o vértice " + to_string(origem) + " e o vértice " + to_string(destino)+ ".\n";
     } else {
-        cout << "A distância mínima de " << origem << " para " << destino << " é " << distanciaDestino << endl;
+        fechoDireto += "A distância mínima de " + to_string(origem) + " para " + to_string(destino) + " é " + to_string(distanciaDestino) + " \n";
     }
+    return fechoDireto;
 }
 
-void Grafo::floyd(int origem, int destino) {
+string Grafo::floyd(int origem, int destino) {
+    string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
 
     for (int i = 1; i <= ordem; i++) {
@@ -315,8 +328,9 @@ void Grafo::floyd(int origem, int destino) {
     }
 
     if(!(distancia[origem][destino] == INT_MAX)){
-        cout << "Distância mínima entre " << origem << " e " << destino << ": " << distancia[origem][destino] << endl;
+        result += "Distância mínima entre " + to_string(origem) + " e " + to_string(destino) + ": " + to_string(distancia[origem][destino]) + " \n";
     }else{
-        cout<< "Esse cmainho não existe" << endl;
+        result +=  "Esse cmainho não existe\n";
     }
+    return result;
 }
