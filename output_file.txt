@@ -9,3 +9,7 @@ Não há caminho entre o vértice de origem e o vértice de destino.
 
 Nó de origem ou destino não encontrado.
 
+Fecho Transitivo Direto do nó 2: 2 10 8 9 1 5 3 7 6 4 
+
+Fecho Transitivo Direto do nó 4: 4 5 3 2 10 8 9 1 7 6 8 
+

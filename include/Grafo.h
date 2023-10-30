@@ -53,9 +53,15 @@ public:
     bool existeCaminho(No* origem, No* destino);
     bool buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados);
 
-    string dijkstra(int origem, int destino);
+    //funcionalidades
+
+    int dijkstra(int origem, int destino);
     string floyd(int origem, int destino);
-   
+
+    void primAGM(int ponderado); 
+    bool isConexo();
+
+    int calcularDiametro();
 
 private:
 

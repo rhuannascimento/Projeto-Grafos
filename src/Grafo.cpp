@@ -249,7 +249,7 @@ string Grafo::fechoTransitivoIndireto(int idNo) {
     return fechoDireto;
 }
 
-string Grafo::dijkstra(int origem, int destino) {
+int Grafo::dijkstra(int origem, int destino) {
     // Verifique se os vértices de origem e destino existem no grafo
     No* noOrigem = buscaNo(origem);
     No* noDestino = buscaNo(destino);
@@ -257,8 +257,7 @@ string Grafo::dijkstra(int origem, int destino) {
 
 
     if (noOrigem == nullptr || noDestino == nullptr) {
-        fechoDireto += "Nó de origem ou destino não encontrado.\n";
-        return fechoDireto; 
+        return -1; 
     }
 
     // Vetor para rastrear as distâncias mínimas
@@ -295,12 +294,17 @@ string Grafo::dijkstra(int origem, int destino) {
     // Você pode usar esse vetor para determinar a distância mínima para o vértice de destino.
 
     int distanciaDestino = distanciaMinima[destino];
-    if (distanciaDestino == numeric_limits<int>::max()) {
+    /*if (distanciaDestino == numeric_limits<int>::max()) {
         fechoDireto +="Não há caminho entre o vértice " + to_string(origem) + " e o vértice " + to_string(destino)+ ".\n";
     } else {
         fechoDireto += "A distância mínima de " + to_string(origem) + " para " + to_string(destino) + " é " + to_string(distanciaDestino) + " \n";
+    }*/
+
+    if (distanciaDestino == numeric_limits<int>::max()) {
+       return -1; 
     }
-    return fechoDireto;
+
+    return distanciaDestino;
 }
 
 string Grafo::floyd(int origem, int destino) {
@@ -334,3 +338,50 @@ string Grafo::floyd(int origem, int destino) {
     }
     return result;
 }
+
+void Grafo::primAGM(int ponderado) {
+    return;
+}
+
+
+int Grafo::calcularDiametro() {
+    int diametro = -1; // Inicializa o diâmetro com um valor impossível
+
+    // Itera sobre todos os pares de nós no grafo
+    No* noAtual = this->noRaiz;
+    while (noAtual != nullptr) {
+        No* outroNo = this->noRaiz;
+        while (outroNo != nullptr) {
+            if (noAtual != outroNo) {
+                // Calcula a distância mínima entre os dois nós usando o algoritmo de Dijkstra
+                int distancia = this->dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+
+                // Atualiza o diâmetro se a distância for maior
+                if (distancia > diametro) {
+                    diametro = distancia;
+                }
+            }
+            outroNo = outroNo->getProxNo();
+        }
+        noAtual = noAtual->getProxNo();
+    }
+
+    return diametro;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
