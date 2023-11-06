@@ -1,8 +1,18 @@
+/**
+ * @file Grafo.cpp
+ * @brief Este arquivo contém a implementação das funções da classe Grafo.
+ */
+
 #include "../include/Grafo.h"
 #include "../include/Aresta.h"
 
 
-// Construtor
+/**
+ * @brief Construtor da classe Grafo.
+ * @param digrafo Indica se o grafo é direcionado (true) ou não (false).
+ * @param ponderado Indica se o grafo é ponderado (true) ou não (false).
+ * @param ordem O número de nós no grafo.
+ */
 Grafo::Grafo(bool digrafo, bool ponderado, int ordem)
 {
     this->digrafo = digrafo;
@@ -15,12 +25,20 @@ Grafo::Grafo(bool digrafo, bool ponderado, int ordem)
     */
 }
 
-// Destrutor
+
+/**
+ * @brief Destrutor da classe Grafo.
+ */
 Grafo::~Grafo()
 {
     // Faça qualquer limpeza de memória necessária aqui, se aplicável
 }
 
+/**
+ * @brief Insere um novo nó no grafo.
+ * @param idNo O ID do nó a ser inserido.
+ * @return Um ponteiro para o nó recém-inserido.
+ */
 No * Grafo::insereNo(int idNo){
 
 
@@ -41,7 +59,9 @@ No * Grafo::insereNo(int idNo){
 
 }
 
-
+/**
+ * @brief Imprime o grafo, mostrando os nós e suas arestas.
+ */
 void Grafo::imprimeGrafo(){
 
         if(this->noRaiz == nullptr){
@@ -76,6 +96,11 @@ void Grafo::imprimeGrafo(){
 }
 
 
+/**
+ * @brief Busca um nó pelo seu ID.
+ * @param no O ID do nó a ser buscado.
+ * @return Um ponteiro para o nó encontrado ou nullptr se não encontrado.
+ */
 No *Grafo::buscaNo(int no){
 
     if(this->noRaiz == nullptr){
@@ -96,6 +121,14 @@ No *Grafo::buscaNo(int no){
 
 }
 
+
+/**
+ * @brief Insere uma aresta no grafo entre dois nós.
+ * @param noOrigem O ID do nó de origem.
+ * @param noDestino O ID do nó de destino.
+ * @param peso O peso da aresta (opcional, apenas se o grafo for ponderado).
+ * @return true se a operação foi bem-sucedida, false caso contrário.
+ */
 bool Grafo::insereAresta(int noOrigem, int noDestino, int peso){
 
     No *origem = this->buscaNo(noOrigem);
@@ -121,6 +154,12 @@ bool Grafo::insereAresta(int noOrigem, int noDestino, int peso){
 
 }
 
+/**
+ * @brief Sobrecarga da função para inserir uma aresta sem peso.
+ * @param noOrigem O ID do nó de origem.
+ * @param noDestino O ID do nó de destino.
+ * @return true se a operação foi bem-sucedida, false caso contrário.
+ */
 bool Grafo::insereAresta(int noOrigem, int noDestino){
 
     No *origem = this->buscaNo(noOrigem);
@@ -146,24 +185,25 @@ bool Grafo::insereAresta(int noOrigem, int noDestino){
 
 }
 
+/**
+ * @brief Calcula o fecho transitivo direto de um nó.
+ * @param idNo O ID do nó de origem.
+ * @return Uma string que representa o fecho transitivo direto do nó.
+ */
 string Grafo::fechoTransitivoDireto(int idNo) {
     No* noOrigem = buscaNo(idNo);
     string fechoDireto;
 
     if (noOrigem == nullptr) {
-        //cout << "Nó de origem não encontrado." << endl;
         fechoDireto += "Nó de origem (" + to_string(idNo) + ") não encontrado.\n";
         return fechoDireto;
     }
 
-    // Usando uma pilha para a busca em profundidade
     stack<No*> pilha;
     pilha.push(noOrigem);
 
-    // Vetor para marcar nós visitados
     vector<bool> visitados(ordem, false);
 
-    //cout << "Fecho Transitivo Direto do nó " << idNo << ": ";
     fechoDireto = "Fecho Transitivo Direto do nó " + to_string(idNo) + ": ";
 
     
@@ -171,13 +211,10 @@ string Grafo::fechoTransitivoDireto(int idNo) {
         No* noAtual = pilha.top();
         pilha.pop();
 
-        // Marcar o nó como visitado
         visitados[noAtual->getIdNo()] = true;
 
-        //cout << noAtual->getIdNo() << " ";
         fechoDireto += std::to_string(noAtual->getIdNo()) + ' ';
 
-        // Percorrer as arestas saindo desse nó
         Aresta* aresta = noAtual->getPrimeiraAresta();
         while (aresta != nullptr) {
             No* noDestino = buscaNo(aresta->getIdNoDestino());
@@ -194,6 +231,12 @@ string Grafo::fechoTransitivoDireto(int idNo) {
 }
 
 
+/**
+ * @brief Verifica se existe um caminho entre dois nós.
+ * @param origem Um ponteiro para o nó de origem.
+ * @param destino Um ponteiro para o nó de destino.
+ * @return true se existe um caminho entre os nós, false caso contrário.
+ */
 bool Grafo::existeCaminho(No* origem, No* destino) {
  
     vector<bool> visitados(ordem, false);
@@ -201,6 +244,13 @@ bool Grafo::existeCaminho(No* origem, No* destino) {
     return buscaEmProfundidade(origem, destino, visitados);
 }
 
+/**
+ * @brief Realiza uma busca em profundidade (DFS) a partir de um nó de origem para verificar a existência de um caminho até um nó de destino.
+ * @param origem Um ponteiro para o nó de origem.
+ * @param destino Um ponteiro para o nó de destino que estamos tentando alcançar.
+ * @param visitados Um vetor que rastreia os nós visitados durante a busca.
+ * @return true se existe um caminho de 'origem' para 'destino', false caso contrário.
+ */
 bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados) {
 
     visitados[origem->getIdNo()] = true;
@@ -223,6 +273,12 @@ bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados
     return false;
 }
 
+
+/**
+ * @brief Calcula o fecho transitivo indireto de um nó.
+ * @param idNo O ID do nó de origem.
+ * @return Uma string que representa o fecho transitivo indireto do nó.
+ */
 string Grafo::fechoTransitivoIndireto(int idNo) {
     string fechoDireto;
 
@@ -249,8 +305,14 @@ string Grafo::fechoTransitivoIndireto(int idNo) {
     return fechoDireto;
 }
 
+/**
+ * @brief Calcula a distância mínima entre dois nós usando o algoritmo de Dijkstra.
+ * @param origem O ID do nó de origem.
+ * @param destino O ID do nó de destino.
+ * @return A distância mínima entre os nós, ou -1 se não houver caminho.
+ */
 int Grafo::dijkstra(int origem, int destino) {
-    // Verifique se os vértices de origem e destino existem no grafo
+
     No* noOrigem = buscaNo(origem);
     No* noDestino = buscaNo(destino);
     string fechoDireto;
@@ -260,13 +322,12 @@ int Grafo::dijkstra(int origem, int destino) {
         return -1; 
     }
 
-    // Vetor para rastrear as distâncias mínimas
+
     vector<int> distanciaMinima(ordem, numeric_limits<int>::max());
 
-    // Defina a distância mínima para o vértice de origem como 0
+
     distanciaMinima[origem] = 0;
 
-    // Use uma fila de prioridade para escolher os vértices com a menor distância
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
     filaPrioridade.push(make_pair(0, origem));
 
@@ -274,13 +335,13 @@ int Grafo::dijkstra(int origem, int destino) {
         int u = filaPrioridade.top().second;
         filaPrioridade.pop();
 
-        // Percorra as arestas do vértice atual
+
         Aresta* aresta = buscaNo(u)->getPrimeiraAresta();
         while (aresta != nullptr) {
             int v = aresta->getIdNoDestino();
             int peso = aresta->getPesoAresta();
 
-            // Se a distância mínima até 'v' pode ser melhorada passando por 'u', atualize-a
+
             if (distanciaMinima[u] + peso < distanciaMinima[v]) {
                 distanciaMinima[v] = distanciaMinima[u] + peso;
                 filaPrioridade.push(make_pair(distanciaMinima[v], v));
@@ -289,9 +350,6 @@ int Grafo::dijkstra(int origem, int destino) {
             aresta = aresta->getProxAresta();
         }
     }
-
-    // A partir deste ponto, o vetor distanciaMinima contém as distâncias mínimas de 'origem' para todos os vértices.
-    // Você pode usar esse vetor para determinar a distância mínima para o vértice de destino.
 
     int distanciaDestino = distanciaMinima[destino];
     /*if (distanciaDestino == numeric_limits<int>::max()) {
@@ -307,6 +365,12 @@ int Grafo::dijkstra(int origem, int destino) {
     return distanciaDestino;
 }
 
+/**
+ * @brief Calcula a distância mínima entre dois nós usando o algoritmo de Floyd-Warshall.
+ * @param origem O ID do nó de origem.
+ * @param destino O ID do nó de destino.
+ * @return Uma string com a distância mínima entre os nós, ou uma mensagem de erro se não houver caminho.
+ */
 string Grafo::floyd(int origem, int destino) {
     string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
@@ -344,19 +408,22 @@ void Grafo::primAGM(int ponderado) {
 }
 
 
+/**
+ * @brief Calcula o diâmetro do grafo.
+ * @return O diâmetro do grafo, ou -1 se o grafo estiver vazio.
+ */
 int Grafo::calcularDiametro() {
-    int diametro = -1; // Inicializa o diâmetro com um valor impossível
+    int diametro = -1; 
 
-    // Itera sobre todos os pares de nós no grafo
+
     No* noAtual = this->noRaiz;
     while (noAtual != nullptr) {
         No* outroNo = this->noRaiz;
         while (outroNo != nullptr) {
             if (noAtual != outroNo) {
-                // Calcula a distância mínima entre os dois nós usando o algoritmo de Dijkstra
+                
                 int distancia = this->dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
 
-                // Atualiza o diâmetro se a distância for maior
                 if (distancia > diametro) {
                     diametro = distancia;
                 }
