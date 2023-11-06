@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <bits/stdc++.h>
-#include <filesystem>
 #include "include/Grafo.h"
 
 using namespace std;
@@ -69,8 +68,10 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         break;
 
     case 10:
-
+        //result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
         result = "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
+        result += "Centro do Grafo: \n";
+        result += "Periferia do Grafo: \n";
         break;
 
     default:
@@ -180,9 +181,9 @@ int main(int argc, char *argv[])
         cout << "|10| Raio, diâmetro, centro e periferia do grafo." << endl;
         cout << "|| Conjunto de vértices de articulação." << endl;
         cout << "|0| Sair das funcionalidades." << endl;
-        cout << "Insira a opção: ";
+        cout << "Insira a opcao: ";
         cin >> option;
-        cout << endl;
+        cout << endl << endl;
 
         switch (option)
         {
@@ -195,6 +196,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    g->~Grafo();
     input_file.close();
     output_file.close();
 

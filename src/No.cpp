@@ -16,6 +16,17 @@ No::No(int idNo) {
     this->proxNo = nullptr;
 }
 
+No::~No() {
+    // Libere a memória alocada para as arestas
+    Aresta *proximaAresta = primeiraAresta;
+    while (proximaAresta != nullptr) {
+        Aresta *temp = proximaAresta;
+        proximaAresta = proximaAresta->getProxAresta();
+        delete temp;
+    }
+}
+
+
 /**
  * @brief Obtém o ID do nó.
  * @return O ID do nó.
