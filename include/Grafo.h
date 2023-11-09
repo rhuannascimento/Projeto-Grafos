@@ -56,7 +56,7 @@ public:
     //funcionalidades
 
     int dijkstra(int origem, int destino);
-    string floyd(int origem, int destino);
+    int floyd(int origem, int destino);
 
     void primAGM(int ponderado); 
     bool isConexo();

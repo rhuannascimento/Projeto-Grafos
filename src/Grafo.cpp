@@ -374,9 +374,9 @@ int Grafo::dijkstra(int origem, int destino) {
  * @brief Calcula a distância mínima entre dois nós usando o algoritmo de Floyd-Warshall.
  * @param origem O ID do nó de origem.
  * @param destino O ID do nó de destino.
- * @return Uma string com a distância mínima entre os nós, ou uma mensagem de erro se não houver caminho.
+ * @return A distância mínima entre os nós, ou -1 não houver caminho.
  */
-string Grafo::floyd(int origem, int destino) {
+int Grafo::floyd(int origem, int destino) {
     string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
 
@@ -400,12 +400,16 @@ string Grafo::floyd(int origem, int destino) {
         }
     }
 
-    if(!(distancia[origem][destino] == INT_MAX)){
+    if(distancia[origem][destino] == INT_MAX){
+        return -1;
+    }
+
+    /*if(!(distancia[origem][destino] == INT_MAX)){
         result += "Distância mínima entre " + to_string(origem) + " e " + to_string(destino) + ": " + to_string(distancia[origem][destino]) + " \n";
     }else{
         result +=  "Esse cmainho não existe\n";
-    }
-    return result;
+    }*/
+    return distancia[origem][destino];
 }
 
 void Grafo::primAGM(int ponderado) {
@@ -415,65 +419,52 @@ void Grafo::primAGM(int ponderado) {
 
 /**
  * @brief Calcula o diâmetro do grafo.
- * @return O diâmetro do grafo, ou -1 se o grafo estiver vazio.
+ * @return O diâmetro do grafo.
  */
 int Grafo::calcularDiametro() {
-    int diametro = -1; 
+    int diametro = -1;
 
+    for (No* noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        int distanciaMaxima = 0;
 
-    No* noAtual = this->noRaiz;
-    while (noAtual != nullptr) {
-        No* outroNo = this->noRaiz;
-        while (outroNo != nullptr) {
+        for (No* outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
             if (noAtual != outroNo) {
-                
-                int distancia = this->dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
-
-                if (distancia > diametro) {
-                    diametro = distancia;
-                }
+                int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
+                distanciaMaxima = max(distanciaMaxima, distancia);
             }
-            outroNo = outroNo->getProxNo();
         }
-        noAtual = noAtual->getProxNo();
+
+        diametro = max(diametro, distanciaMaxima);
     }
 
     return diametro;
 }
 
+/**
+ * @brief Calcula o raio do grafo.
+ * @return O raio do grafo.
+ */
 int Grafo::calcularRaio() {
-    int raio = numeric_limits<int>::max();
+     int raio = INT_MAX;
 
-    No* noAtual = this->noRaiz;
-    while (noAtual != nullptr) {
+    for (No* noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
         int distanciaMaxima = 0;
-        int idNoAtual = noAtual->getIdNo();
 
-        for (int i = 1; i <= ordem; i++) {
-            if (i != idNoAtual) {
-                int distancia = dijkstra(idNoAtual, i);
-                if (distancia == -1) {
-                    // Se não houver caminho entre os nós, continue
-                    continue;
-                }
-                if (distancia > distanciaMaxima) {
-                    distanciaMaxima = distancia;
-                }
+        for (No* outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+            if (noAtual != outroNo) {
+                int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
+                distanciaMaxima = max(distanciaMaxima, distancia);
             }
         }
 
-        if (distanciaMaxima < raio) {
-            raio = distanciaMaxima;
-        }
-
-        noAtual = noAtual->getProxNo();
+        raio = min(raio, distanciaMaxima);
     }
 
     return raio;
 }
 
 
-vector<int> Grafo::calcularPeriferia() {
+/*vector<int> Grafo::calcularPeriferia() {
     vector<int> periferia;
     int maiorDistanciaMinima = -1;
 
@@ -540,4 +531,4 @@ vector<int> Grafo::calcularCentro() {
     return centro;
 }
 
-
+*/

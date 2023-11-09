@@ -57,7 +57,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         cout << "A qual nó você deseja chegar?" << endl;
         cin >> destino;
 
-        result = g->floyd(no, destino);
+        result = "Distância mínima entre os nós" + to_string(no) + " e " + to_string(destino) + " é: " + to_string(g->floyd(no, destino));
 
         break;
 
@@ -68,8 +68,8 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         break;
 
     case 10:
-        //result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
-        result = "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
+        result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
+        result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
         result += "Centro do Grafo: \n";
         result += "Periferia do Grafo: \n";
         break;
