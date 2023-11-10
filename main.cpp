@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
     2[x] Fecho transitivo indireto de um vértice.
     3[x]Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
     4[x]Caminho mínimo entre dois vértices usando algoritmo de Floyd.
-    5 Árvore Geradora Mínima usando o algoritmo de Prim.
+    5[x]Árvore Geradora Mínima usando o algoritmo de Prim.
     6 Árvore Geradora Mínima usando o algoritmo de Kruskal.
     7 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
     8 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
         cout << "|3| Fecho transitivo indireto." << endl;
         cout << "|4| Caminho minimo por Dijkstra." << endl;
         cout << "|5| Caminho minimo por Floyd." << endl;
-        cout << "|6| Arvore Geradora por Prim(Não funfa)." << endl;
+        cout << "|6| Arvore Geradora por Prim(." << endl;
         cout << "|| Arvore Geradora por Kruskal." << endl;
         cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno" << endl;
         cout << "|| Possui ordenação topologica ou e é acíclico direcionado?." << endl;
