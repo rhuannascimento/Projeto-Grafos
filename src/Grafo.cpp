@@ -6,7 +6,6 @@
 #include "../include/Grafo.h"
 #include "../include/Aresta.h"
 
-
 /**
  * @brief Construtor da classe Grafo.
  * @param digrafo Indica se o grafo é direcionado (true) ou não (false).
@@ -25,14 +24,15 @@ Grafo::Grafo(bool digrafo, bool ponderado, int ordem)
     */
 }
 
-
 /**
  * @brief Destrutor da classe Grafo.
  */
-Grafo::~Grafo() {
+Grafo::~Grafo()
+{
     // Libere a memória alocada para nós e arestas
     No *proxNo = noRaiz;
-    while (proxNo != nullptr) {
+    while (proxNo != nullptr)
+    {
         No *temp = proxNo;
         proxNo = proxNo->getProxNo();
         delete temp;
@@ -44,12 +44,13 @@ Grafo::~Grafo() {
  * @param idNo O ID do nó a ser inserido.
  * @return Um ponteiro para o nó recém-inserido.
  */
-No * Grafo::insereNo(int idNo){
-
+No *Grafo::insereNo(int idNo)
+{
 
     No *novoNo = new No(idNo);
 
-    if(this->noRaiz == nullptr){
+    if (this->noRaiz == nullptr)
+    {
         this->noRaiz = novoNo;
         this->ultimoNo = novoNo;
         novoNo->setProxNo(nullptr);
@@ -61,71 +62,75 @@ No * Grafo::insereNo(int idNo){
     novoNo->setProxNo(nullptr);
 
     return novoNo;
-
 }
 
 /**
  * @brief Imprime o grafo, mostrando os nós e suas arestas.
  */
-void Grafo::imprimeGrafo(){
+void Grafo::imprimeGrafo()
+{
 
-        if(this->noRaiz == nullptr){
-            return;
-        }
-        
-        No * proxNo = this->noRaiz;
-        Aresta *aresta = proxNo->getPrimeiraAresta();
+    if (this->noRaiz == nullptr)
+    {
+        return;
+    }
 
-        while(proxNo != nullptr){
+    No *proxNo = this->noRaiz;
+    Aresta *aresta = proxNo->getPrimeiraAresta();
 
-            cout << "|" << proxNo->getIdNo()<<"| => ";
+    while (proxNo != nullptr)
+    {
 
-            aresta = proxNo->getPrimeiraAresta();
-            while (aresta != nullptr)
+        cout << "|" << proxNo->getIdNo() << "| => ";
+
+        aresta = proxNo->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
+            if (this->ponderado)
             {
-                if(this->ponderado){
-                    cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
-                    aresta = aresta->getProxAresta();
-                }else{
-                    cout<< aresta->getIdNoDestino()<<" => ";
-                    aresta = aresta->getProxAresta();
-                }
-                 
+                cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
+                aresta = aresta->getProxAresta();
             }
-
-            cout<<endl;
-            
-            proxNo = proxNo->getProxNo();
+            else
+            {
+                cout << aresta->getIdNoDestino() << " => ";
+                aresta = aresta->getProxAresta();
+            }
         }
 
-}
+        cout << endl;
 
+        proxNo = proxNo->getProxNo();
+    }
+}
 
 /**
  * @brief Busca um nó pelo seu ID.
  * @param no O ID do nó a ser buscado.
  * @return Um ponteiro para o nó encontrado ou nullptr se não encontrado.
  */
-No *Grafo::buscaNo(int no){
+No *Grafo::buscaNo(int no)
+{
 
-    if(this->noRaiz == nullptr){
+    if (this->noRaiz == nullptr)
+    {
         insereNo(no);
     }
 
-    if(this->noRaiz->getIdNo() == no){
+    if (this->noRaiz->getIdNo() == no)
+    {
         return this->noRaiz;
     }
 
-    No * noBusca = this->noRaiz->getProxNo();
+    No *noBusca = this->noRaiz->getProxNo();
 
-    while(noBusca != nullptr && noBusca->getIdNo() != no){
+    while (noBusca != nullptr && noBusca->getIdNo() != no)
+    {
         noBusca = noBusca->getProxNo();
     }
 
     return noBusca;
-
 }
-
 
 /**
  * @brief Insere uma aresta no grafo entre dois nós.
@@ -134,29 +139,33 @@ No *Grafo::buscaNo(int no){
  * @param peso O peso da aresta (opcional, apenas se o grafo for ponderado).
  * @return true se a operação foi bem-sucedida, false caso contrário.
  */
-bool Grafo::insereAresta(int noOrigem, int noDestino, int peso){
+bool Grafo::insereAresta(int noOrigem, int noDestino, int peso)
+{
 
     No *origem = this->buscaNo(noOrigem);
     No *destino = this->buscaNo(noDestino);
 
-    if(origem==nullptr){
+    if (origem == nullptr)
+    {
         origem = insereNo(noOrigem);
     }
 
-    if(destino==nullptr){
+    if (destino == nullptr)
+    {
         destino = insereNo(noDestino);
     }
 
-    if(this->isDIgrafo()){
+    if (this->isDIgrafo())
+    {
         origem->insertAresta(noDestino, peso);
-    }else{
+    }
+    else
+    {
         origem->insertAresta(noDestino, peso);
         destino->insertAresta(noOrigem, peso);
     }
 
     return true;
-
-
 }
 
 /**
@@ -165,29 +174,33 @@ bool Grafo::insereAresta(int noOrigem, int noDestino, int peso){
  * @param noDestino O ID do nó de destino.
  * @return true se a operação foi bem-sucedida, false caso contrário.
  */
-bool Grafo::insereAresta(int noOrigem, int noDestino){
+bool Grafo::insereAresta(int noOrigem, int noDestino)
+{
 
     No *origem = this->buscaNo(noOrigem);
     No *destino = this->buscaNo(noDestino);
 
-    if(origem==nullptr){
+    if (origem == nullptr)
+    {
         origem = insereNo(noOrigem);
     }
 
-    if(destino==nullptr){
+    if (destino == nullptr)
+    {
         destino = insereNo(noDestino);
     }
 
-    if(this->isDIgrafo()){
+    if (this->isDIgrafo())
+    {
         origem->insertAresta(noDestino);
-    }else{
+    }
+    else
+    {
         origem->insertAresta(noDestino);
         destino->insertAresta(noOrigem);
     }
 
     return true;
-
-
 }
 
 /**
@@ -195,36 +208,40 @@ bool Grafo::insereAresta(int noOrigem, int noDestino){
  * @param idNo O ID do nó de origem.
  * @return Uma string que representa o fecho transitivo direto do nó.
  */
-string Grafo::fechoTransitivoDireto(int idNo) {
-    No* noOrigem = buscaNo(idNo);
+string Grafo::fechoTransitivoDireto(int idNo)
+{
+    No *noOrigem = buscaNo(idNo);
     string fechoDireto;
 
-    if (noOrigem == nullptr) {
+    if (noOrigem == nullptr)
+    {
         fechoDireto += "Nó de origem (" + to_string(idNo) + ") não encontrado.\n";
         return fechoDireto;
     }
 
-    stack<No*> pilha;
+    stack<No *> pilha;
     pilha.push(noOrigem);
 
     vector<bool> visitados(ordem, false);
 
     fechoDireto = "Fecho Transitivo Direto do nó " + to_string(idNo) + ": ";
 
-    
-    while (!pilha.empty()) {
-        No* noAtual = pilha.top();
+    while (!pilha.empty())
+    {
+        No *noAtual = pilha.top();
         pilha.pop();
 
         visitados[noAtual->getIdNo()] = true;
 
         fechoDireto += std::to_string(noAtual->getIdNo()) + ' ';
 
-        Aresta* aresta = noAtual->getPrimeiraAresta();
-        while (aresta != nullptr) {
-            No* noDestino = buscaNo(aresta->getIdNoDestino());
+        Aresta *aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
+            No *noDestino = buscaNo(aresta->getIdNoDestino());
 
-            if (!visitados[noDestino->getIdNo()]) {
+            if (!visitados[noDestino->getIdNo()])
+            {
                 pilha.push(noDestino);
             }
 
@@ -235,15 +252,15 @@ string Grafo::fechoTransitivoDireto(int idNo) {
     return fechoDireto;
 }
 
-
 /**
  * @brief Verifica se existe um caminho entre dois nós.
  * @param origem Um ponteiro para o nó de origem.
  * @param destino Um ponteiro para o nó de destino.
  * @return true se existe um caminho entre os nós, false caso contrário.
  */
-bool Grafo::existeCaminho(No* origem, No* destino) {
- 
+bool Grafo::existeCaminho(No *origem, No *destino)
+{
+
     vector<bool> visitados(ordem, false);
 
     return buscaEmProfundidade(origem, destino, visitados);
@@ -256,19 +273,23 @@ bool Grafo::existeCaminho(No* origem, No* destino) {
  * @param visitados Um vetor que rastreia os nós visitados durante a busca.
  * @return true se existe um caminho de 'origem' para 'destino', false caso contrário.
  */
-bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados) {
+bool Grafo::buscaEmProfundidade(No *origem, No *destino, vector<bool> &visitados)
+{
 
     visitados[origem->getIdNo()] = true;
 
-    if (origem == destino) {
+    if (origem == destino)
+    {
         return true;
     }
 
-    Aresta* aresta = origem->getPrimeiraAresta();
-    while (aresta != nullptr) {
-        No* proximoNo = buscaNo(aresta->getIdNoDestino());
+    Aresta *aresta = origem->getPrimeiraAresta();
+    while (aresta != nullptr)
+    {
+        No *proximoNo = buscaNo(aresta->getIdNoDestino());
 
-        if (!visitados[proximoNo->getIdNo()] && buscaEmProfundidade(proximoNo, destino, visitados)) {
+        if (!visitados[proximoNo->getIdNo()] && buscaEmProfundidade(proximoNo, destino, visitados))
+        {
             return true;
         }
 
@@ -278,35 +299,37 @@ bool Grafo::buscaEmProfundidade(No* origem, No* destino, vector<bool>& visitados
     return false;
 }
 
-
 /**
  * @brief Calcula o fecho transitivo indireto de um nó.
  * @param idNo O ID do nó de origem.
  * @return Uma string que representa o fecho transitivo indireto do nó.
  */
-string Grafo::fechoTransitivoIndireto(int idNo) {
+string Grafo::fechoTransitivoIndireto(int idNo)
+{
     string fechoDireto;
-
 
     fechoDireto += "Fecho Transitivo Indireto do nó " + to_string(idNo) + ": ";
 
-    No* noOrigem = buscaNo(idNo);
+    No *noOrigem = buscaNo(idNo);
 
-    if (noOrigem == nullptr) {
+    if (noOrigem == nullptr)
+    {
         fechoDireto += "Nó de origem não encontrado.\n";
         return fechoDireto;
     }
 
-    No* proxNo = this->noRaiz;
+    No *proxNo = this->noRaiz;
 
-    while (proxNo != nullptr) {
-        if (proxNo->getIdNo() != noOrigem->getIdNo() && existeCaminho(noOrigem, proxNo)) {
+    while (proxNo != nullptr)
+    {
+        if (proxNo->getIdNo() != noOrigem->getIdNo() && existeCaminho(noOrigem, proxNo))
+        {
             fechoDireto += to_string(proxNo->getIdNo()) + " ";
         }
         proxNo = proxNo->getProxNo();
     }
     fechoDireto += "\n";
-    
+
     return fechoDireto;
 }
 
@@ -316,38 +339,38 @@ string Grafo::fechoTransitivoIndireto(int idNo) {
  * @param destino O ID do nó de destino.
  * @return A distância mínima entre os nós, ou -1 se não houver caminho.
  */
-int Grafo::dijkstra(int origem, int destino) {
+int Grafo::dijkstra(int origem, int destino)
+{
 
-    No* noOrigem = buscaNo(origem);
-    No* noDestino = buscaNo(destino);
+    No *noOrigem = buscaNo(origem);
+    No *noDestino = buscaNo(destino);
     string fechoDireto;
 
-
-    if (noOrigem == nullptr || noDestino == nullptr) {
-        return -1; 
+    if (noOrigem == nullptr || noDestino == nullptr)
+    {
+        return -1;
     }
 
-
     vector<int> distanciaMinima(ordem, numeric_limits<int>::max());
-
 
     distanciaMinima[origem] = 0;
 
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
     filaPrioridade.push(make_pair(0, origem));
 
-    while (!filaPrioridade.empty()) {
+    while (!filaPrioridade.empty())
+    {
         int u = filaPrioridade.top().second;
         filaPrioridade.pop();
 
-
-        Aresta* aresta = buscaNo(u)->getPrimeiraAresta();
-        while (aresta != nullptr) {
+        Aresta *aresta = buscaNo(u)->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
             int v = aresta->getIdNoDestino();
             int peso = aresta->getPesoAresta();
 
-
-            if (distanciaMinima[u] + peso < distanciaMinima[v]) {
+            if (distanciaMinima[u] + peso < distanciaMinima[v])
+            {
                 distanciaMinima[v] = distanciaMinima[u] + peso;
                 filaPrioridade.push(make_pair(distanciaMinima[v], v));
             }
@@ -363,8 +386,9 @@ int Grafo::dijkstra(int origem, int destino) {
         fechoDireto += "A distância mínima de " + to_string(origem) + " para " + to_string(destino) + " é " + to_string(distanciaDestino) + " \n";
     }*/
 
-    if (distanciaDestino == numeric_limits<int>::max()) {
-       return -1; 
+    if (distanciaDestino == numeric_limits<int>::max())
+    {
+        return -1;
     }
 
     return distanciaDestino;
@@ -376,31 +400,39 @@ int Grafo::dijkstra(int origem, int destino) {
  * @param destino O ID do nó de destino.
  * @return A distância mínima entre os nós, ou -1 não houver caminho.
  */
-int Grafo::floyd(int origem, int destino) {
+int Grafo::floyd(int origem, int destino)
+{
     string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
 
-    for (int i = 1; i <= ordem; i++) {
+    for (int i = 1; i <= ordem; i++)
+    {
         distancia[i][i] = 0;
-        Aresta* aresta = buscaNo(i)->getPrimeiraAresta();
-        while (aresta != nullptr) {
+        Aresta *aresta = buscaNo(i)->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
             distancia[i][aresta->getIdNoDestino()] = aresta->getPesoAresta();
             aresta = aresta->getProxAresta();
         }
     }
 
-    for (int k = 1; k <= ordem; k++) {
-        for (int i = 1; i <= ordem; i++) {
-            for (int j = 1; j <= ordem; j++) {
+    for (int k = 1; k <= ordem; k++)
+    {
+        for (int i = 1; i <= ordem; i++)
+        {
+            for (int j = 1; j <= ordem; j++)
+            {
                 if (distancia[i][k] != INT_MAX && distancia[k][j] != INT_MAX &&
-                    distancia[i][k] + distancia[k][j] < distancia[i][j]) {
+                    distancia[i][k] + distancia[k][j] < distancia[i][j])
+                {
                     distancia[i][j] = distancia[i][k] + distancia[k][j];
                 }
             }
         }
     }
 
-    if(distancia[origem][destino] == INT_MAX){
+    if (distancia[origem][destino] == INT_MAX)
+    {
         return -1;
     }
 
@@ -412,8 +444,71 @@ int Grafo::floyd(int origem, int destino) {
     return distancia[origem][destino];
 }
 
-void Grafo::primAGM(int ponderado) {
-    return;
+
+
+string Grafo::primAGM() {
+
+
+    if(this->digrafo){
+        return "Não é possível AGM em digrafos!";
+    }
+  
+    vector<bool> inAGM(ordem, false); 
+    vector<int> chave(ordem, INT_MAX);  
+    vector<int> pai(ordem, -1);  
+
+    
+    int raiz = noRaiz->getIdNo();
+    chave[raiz - 1] = 0;
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
+    filaPrioridade.push(make_pair(0, raiz));
+
+    while (!filaPrioridade.empty()) {
+        int u = filaPrioridade.top().second;
+        filaPrioridade.pop();
+
+        if (inAGM[u - 1]) continue;  // Se já estiver na árvore, ignore
+
+        inAGM[u - 1] = true;
+
+        Aresta* aresta = buscaNo(u)->getPrimeiraAresta();
+        while (aresta != nullptr) {
+            int v = aresta->getIdNoDestino();
+            int peso = aresta->getPesoAresta();
+
+            if (!inAGM[v - 1] && peso < chave[v - 1]) {
+                chave[v - 1] = peso;
+                pai[v - 1] = u;
+
+                filaPrioridade.push(make_pair(peso, v));
+            }
+
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+
+    string result = "";
+
+
+    int pesoTotal = 0;
+    result += "Arestas da Árvore Geradora Mínima (Prim): \n";
+    for (int i = 0; i < ordem; i++) {
+        if (pai[i] != -1) {
+            int u = pai[i];
+            int v = i + 1;
+            int peso = chave[i];
+
+            result +=  to_string(u) + " " + to_string(v) + " " + to_string(peso)  + "\n";
+
+            pesoTotal += peso;
+        }
+    }
+
+    result += "Peso total da Árvore Geradora Mínima: " + to_string(pesoTotal) + "\n";
+
+    return result;
 }
 
 
@@ -421,14 +516,18 @@ void Grafo::primAGM(int ponderado) {
  * @brief Calcula o diâmetro do grafo.
  * @return O diâmetro do grafo.
  */
-int Grafo::calcularDiametro() {
+int Grafo::calcularDiametro()
+{
     int diametro = -1;
 
-    for (No* noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+    for (No *noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
         int distanciaMaxima = 0;
 
-        for (No* outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
-            if (noAtual != outroNo) {
+        for (No *outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
+        {
+            if (noAtual != outroNo)
+            {
                 int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
                 distanciaMaxima = max(distanciaMaxima, distancia);
             }
@@ -444,14 +543,18 @@ int Grafo::calcularDiametro() {
  * @brief Calcula o raio do grafo.
  * @return O raio do grafo.
  */
-int Grafo::calcularRaio() {
-     int raio = INT_MAX;
+int Grafo::calcularRaio()
+{
+    int raio = INT_MAX;
 
-    for (No* noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+    for (No *noAtual = this->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
         int distanciaMaxima = 0;
 
-        for (No* outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
-            if (noAtual != outroNo) {
+        for (No *outroNo = this->noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
+        {
+            if (noAtual != outroNo)
+            {
                 int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
                 distanciaMaxima = max(distanciaMaxima, distancia);
             }
@@ -462,7 +565,6 @@ int Grafo::calcularRaio() {
 
     return raio;
 }
-
 
 /*vector<int> Grafo::calcularPeriferia() {
     vector<int> periferia;

@@ -63,7 +63,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
 
     case 6:
         
-        g->primAGM(ponderado);
+        result = g->primAGM();
 
         break;
 

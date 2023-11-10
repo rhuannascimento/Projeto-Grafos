@@ -58,13 +58,14 @@ public:
     int dijkstra(int origem, int destino);
     int floyd(int origem, int destino);
 
-    void primAGM(int ponderado); 
-    bool isConexo();
+    string primAGM();
+    
+    //bool isConexo();
 
     int calcularDiametro();
     int calcularRaio() ;
-    vector<int> calcularCentro();
-    vector<int> calcularPeriferia();
+    //vector<int> calcularCentro();
+   // vector<int> calcularPeriferia();
 
 private:
 
