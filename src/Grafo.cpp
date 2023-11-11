@@ -506,6 +506,78 @@ string Grafo::primAGM() {
 }
 
 
+string Grafo::kruskalAGM() {
+
+    if(this->digrafo){
+        return "Não é possível AGM em digrafos!";
+    }
+   
+    vector<pair<int, pair<int, int>>> arestasOrdenadas;
+
+   
+    for (No* noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        Aresta* aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr) {
+            int noOrigem = noAtual->getIdNo();
+            int noDestino = aresta->getIdNoDestino();
+            int peso = aresta->getPesoAresta();
+            arestasOrdenadas.push_back({peso, {noOrigem, noDestino}});
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+ 
+    sort(arestasOrdenadas.begin(), arestasOrdenadas.end());
+
+
+    vector<int> conjunto(ordem + 1);
+
+   
+    for (int i = 1; i <= ordem; ++i) {
+        conjunto[i] = i;
+    }
+
+   
+    vector<pair<int, pair<int, int>>> arvoreGeradoraMinima;
+
+    for (int i = 0; i < arestasOrdenadas.size(); ++i) {
+        int origem = arestasOrdenadas[i].second.first;
+        int destino = arestasOrdenadas[i].second.second;
+
+       
+        if (conjunto[origem] != conjunto[destino]) {
+            arvoreGeradoraMinima.push_back(arestasOrdenadas[i]);
+
+          
+            int conjuntoOrigem = conjunto[origem];
+            int conjuntoDestino = conjunto[destino];
+            for (int j = 1; j <= ordem; ++j) {
+                if (conjunto[j] == conjuntoDestino) {
+                    conjunto[j] = conjuntoOrigem;
+                }
+            }
+        }
+    }
+
+    string result = "";
+   
+    result +=  "Arestas da Árvore Geradora Mínima: \n";
+    int pesoTotal = 0;
+    for (auto& aresta : arvoreGeradoraMinima) {
+        int origem = aresta.second.first;
+        int destino = aresta.second.second;
+        int peso = aresta.first;
+        pesoTotal += peso;
+        result += to_string(origem) + " " + to_string(destino) + " " + to_string(peso) + "\n";
+    }
+    result += "Peso total da Árvore Geradora Mínima: " + to_string(pesoTotal) + "\n";
+
+    return result;
+}
+
+
+
+
 /**
  * @brief Calcula o diâmetro do grafo.
  * @return O diâmetro do grafo.

@@ -67,6 +67,12 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
 
         break;
 
+    case 7:
+        
+        result = g->kruskalAGM();
+
+        break;
+
     case 10:
         result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
         result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
@@ -175,7 +181,7 @@ int main(int argc, char *argv[])
         cout << "|4| Caminho minimo por Dijkstra." << endl;
         cout << "|5| Caminho minimo por Floyd." << endl;
         cout << "|6| Arvore Geradora por Prim(." << endl;
-        cout << "|| Arvore Geradora por Kruskal." << endl;
+        cout << "|7| Arvore Geradora por Kruskal." << endl;
         cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno" << endl;
         cout << "|| Possui ordenação topologica ou e é acíclico direcionado?." << endl;
         cout << "|10| Raio, diâmetro, centro e periferia do grafo." << endl;

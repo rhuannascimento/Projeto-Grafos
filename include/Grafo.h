@@ -12,6 +12,7 @@
 #include <climits>
 #include <limits>
 #include <cstdio>
+#include <algorithm>
 
 using namespace std;
 
@@ -59,7 +60,7 @@ public:
     int floyd(int origem, int destino);
 
     string primAGM();
-    
+    string kruskalAGM();
     //bool isConexo();
 
     int calcularDiametro();
