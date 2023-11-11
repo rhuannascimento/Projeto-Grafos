@@ -380,11 +380,7 @@ int Grafo::dijkstra(int origem, int destino)
     }
 
     int distanciaDestino = distanciaMinima[destino];
-    /*if (distanciaDestino == numeric_limits<int>::max()) {
-        fechoDireto +="Não há caminho entre o vértice " + to_string(origem) + " e o vértice " + to_string(destino)+ ".\n";
-    } else {
-        fechoDireto += "A distância mínima de " + to_string(origem) + " para " + to_string(destino) + " é " + to_string(distanciaDestino) + " \n";
-    }*/
+
 
     if (distanciaDestino == numeric_limits<int>::max())
     {
@@ -436,11 +432,7 @@ int Grafo::floyd(int origem, int destino)
         return -1;
     }
 
-    /*if(!(distancia[origem][destino] == INT_MAX)){
-        result += "Distância mínima entre " + to_string(origem) + " e " + to_string(destino) + ": " + to_string(distancia[origem][destino]) + " \n";
-    }else{
-        result +=  "Esse cmainho não existe\n";
-    }*/
+ 
     return distancia[origem][destino];
 }
 
@@ -470,7 +462,7 @@ string Grafo::primAGM() {
         int u = filaPrioridade.top().second;
         filaPrioridade.pop();
 
-        if (inAGM[u - 1]) continue;  // Se já estiver na árvore, ignore
+        if (inAGM[u - 1]) continue;  
 
         inAGM[u - 1] = true;
 
