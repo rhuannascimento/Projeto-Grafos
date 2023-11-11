@@ -445,7 +445,9 @@ int Grafo::floyd(int origem, int destino)
 }
 
 
-
+/**
+ * @brief Aplica o algoritmo de Prim para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
+ */
 string Grafo::primAGM() {
 
 
@@ -566,71 +568,3 @@ int Grafo::calcularRaio()
     return raio;
 }
 
-/*vector<int> Grafo::calcularPeriferia() {
-    vector<int> periferia;
-    int maiorDistanciaMinima = -1;
-
-    No* noAtual = this->noRaiz;
-    while (noAtual != nullptr) {
-        int idNoAtual = noAtual->getIdNo();
-        for (int i = 1; i <= ordem; i++) {
-            if (i != idNoAtual) {
-                int distancia = dijkstra(idNoAtual, i);
-                if (distancia == -1) {
-                    // Se não houver caminho entre os nós, continue
-                    continue;
-                }
-                if (distancia > maiorDistanciaMinima) {
-                    maiorDistanciaMinima = distancia;
-                    periferia.clear();
-                    periferia.push_back(idNoAtual);
-                } else if (distancia == maiorDistanciaMinima) {
-                    periferia.push_back(idNoAtual);
-                }
-            }
-        }
-
-        noAtual = noAtual->getProxNo();
-    }
-
-    return periferia;
-}
-
-
-vector<int> Grafo::calcularCentro() {
-    vector<int> centro;
-    int menorDistanciaMaxima = numeric_limits<int>::max();
-
-    No* noAtual = this->noRaiz;
-    while (noAtual != nullptr) {
-        int distanciaMaxima = 0;
-        int idNoAtual = noAtual->getIdNo();
-
-        for (int i = 1; i <= ordem; i++) {
-            if (i != idNoAtual) {
-                int distancia = dijkstra(idNoAtual, i);
-                if (distancia == -1) {
-                    // Se não houver caminho entre os nós, continue
-                    continue;
-                }
-                if (distancia > distanciaMaxima) {
-                    distanciaMaxima = distancia;
-                }
-            }
-        }
-
-        if (distanciaMaxima < menorDistanciaMaxima) {
-            menorDistanciaMaxima = distanciaMaxima;
-            centro.clear();
-            centro.push_back(idNoAtual);
-        } else if (distanciaMaxima == menorDistanciaMaxima) {
-            centro.push_back(idNoAtual);
-        }
-
-        noAtual = noAtual->getProxNo();
-    }
-
-    return centro;
-}
-
-*/
