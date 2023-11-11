@@ -505,7 +505,9 @@ string Grafo::primAGM() {
     return result;
 }
 
-
+/**
+ * @brief Aplica o algoritmo de Kruskal para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
+ */
 string Grafo::kruskalAGM() {
 
     if(this->digrafo){

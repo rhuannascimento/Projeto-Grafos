@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
     3[x]Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
     4[x]Caminho mínimo entre dois vértices usando algoritmo de Floyd.
     5[x]Árvore Geradora Mínima usando o algoritmo de Prim.
-    6 Árvore Geradora Mínima usando o algoritmo de Kruskal.
+    6[x]Árvore Geradora Mínima usando o algoritmo de Kruskal.
     7 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
     8 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
     9 Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.

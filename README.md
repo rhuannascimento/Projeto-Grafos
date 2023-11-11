@@ -43,7 +43,7 @@ O programa deve oferecer as seguintes funcionalidades:
 - [x]Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
 - [x]Caminho mínimo entre dois vértices usando algoritmo de Floyd.
 - [x]Árvore Geradora Mínima usando o algoritmo de Prim.
-- Árvore Geradora Mínima usando o algoritmo de Kruskal.
+- [x]Árvore Geradora Mínima usando o algoritmo de Kruskal.
 - Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
 - Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
 - Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
