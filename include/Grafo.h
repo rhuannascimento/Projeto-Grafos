@@ -61,12 +61,12 @@ public:
 
     string primAGM();
     string kruskalAGM();
-    //bool isConexo();
+    
 
     int calcularDiametro();
     int calcularRaio() ;
-    //vector<int> calcularCentro();
-   // vector<int> calcularPeriferia();
+    vector<int> calcularCentro();
+
 
 private:
 

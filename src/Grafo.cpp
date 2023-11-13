@@ -624,7 +624,9 @@ int Grafo::calcularRaio()
             if (noAtual != outroNo)
             {
                 int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
+                
                 distanciaMaxima = max(distanciaMaxima, distancia);
+             
             }
         }
 
@@ -634,3 +636,26 @@ int Grafo::calcularRaio()
     return raio;
 }
 
+
+vector<int> Grafo::calcularCentro() {
+    int menorExcentricidade = INT_MAX;
+    vector<int> centro = {};
+
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        int excentricidadeAtual = 0;
+
+        // Calcula a excentricidade do nó atual
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            excentricidadeAtual = max(excentricidadeAtual, distancia);
+        }
+
+        // Atualiza o centro se a excentricidade atual for menor
+        if (excentricidadeAtual < menorExcentricidade) {
+            menorExcentricidade = excentricidadeAtual;
+            centro.push_back(noAtual->getIdNo());
+        }
+    }
+
+    return centro;
+}

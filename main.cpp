@@ -13,6 +13,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     int destino;
     int option;
     string result;
+    vector<int> vetorCentro;
 
     cout << "Executando a opção " << opt << ":" << endl;
     cout << "|1| Imprimir no console o resultado" << endl;
@@ -76,7 +77,15 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     case 10:
         result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
         result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
-        result += "Centro do Grafo: \n";
+
+        vetorCentro = g->calcularCentro();
+
+        result += "Centro do Grafo: ";
+        for (int i = 0; i < vetorCentro.size(); i++)
+        {
+             result += to_string(vetorCentro[i]) + " ";     
+        }
+        result += "\n";
         result += "Periferia do Grafo: \n";
         break;
 
