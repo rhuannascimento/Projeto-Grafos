@@ -636,7 +636,10 @@ int Grafo::calcularRaio()
     return raio;
 }
 
-
+/**
+ * @brief Calcula o centro do grafo.
+ * @return Um vetor de inteiros com os centros do grafo.
+ */
 vector<int> Grafo::calcularCentro() {
     int menorExcentricidade = INT_MAX;
     vector<int> centro = {};
@@ -644,13 +647,11 @@ vector<int> Grafo::calcularCentro() {
     for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
         int excentricidadeAtual = 0;
 
-        // Calcula a excentricidade do nó atual
         for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
             int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
-        // Atualiza o centro se a excentricidade atual for menor
         if (excentricidadeAtual < menorExcentricidade) {
             menorExcentricidade = excentricidadeAtual;
             centro.push_back(noAtual->getIdNo());
@@ -658,4 +659,41 @@ vector<int> Grafo::calcularCentro() {
     }
 
     return centro;
+}
+
+/**
+ * @brief Calcula a periferia do grafo.
+ * @return Um vetor de inteiros com as perifeiras do grafo.
+ */
+vector<int> Grafo::calcularPeriferia() {
+    int maiorExcentricidade = INT_MIN;
+    vector<int> periferia;
+
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        int excentricidadeAtual = 0;
+
+     
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            excentricidadeAtual = max(excentricidadeAtual, distancia);
+        }
+
+        maiorExcentricidade = max(maiorExcentricidade, excentricidadeAtual);
+    }
+
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        int excentricidadeAtual = 0;
+
+    
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            excentricidadeAtual = max(excentricidadeAtual, distancia);
+        }
+
+        if (excentricidadeAtual == maiorExcentricidade) {
+            periferia.push_back(noAtual->getIdNo());
+        }
+    }
+
+    return periferia;
 }

@@ -13,7 +13,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     int destino;
     int option;
     string result;
-    vector<int> vetorCentro;
+    vector<int> vetorAux;
 
     cout << "Executando a opção " << opt << ":" << endl;
     cout << "|1| Imprimir no console o resultado" << endl;
@@ -78,15 +78,24 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         result = "Raio do Grafo: "  + to_string(g->calcularRaio()) + "\n";
         result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
 
-        vetorCentro = g->calcularCentro();
+        vetorAux = g->calcularCentro();
 
         result += "Centro do Grafo: ";
-        for (int i = 0; i < vetorCentro.size(); i++)
+        for (int i = 0; i < vetorAux.size(); i++)
         {
-             result += to_string(vetorCentro[i]) + " ";     
+             result += to_string(vetorAux[i]) + " ";     
         }
         result += "\n";
-        result += "Periferia do Grafo: \n";
+
+        vetorAux = g->calcularPeriferia();
+
+        result += "Periferia do Grafo: ";
+        for (int i = 0; i < vetorAux.size(); i++)
+        {
+             result += to_string(vetorAux[i]) + " ";     
+        }
+        result += "\n";
+
         break;
 
     default:
@@ -175,9 +184,9 @@ int main(int argc, char *argv[])
     6[x]Árvore Geradora Mínima usando o algoritmo de Kruskal.
     7 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
     8 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
-    9 Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
+    9[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
     10 Conjunto de vértices de articulação.
-    11 Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
+    11[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
     */
     while (!quit)
     {

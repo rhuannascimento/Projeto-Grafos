@@ -66,7 +66,7 @@ public:
     int calcularDiametro();
     int calcularRaio() ;
     vector<int> calcularCentro();
-
+    vector<int> calcularPeriferia();
 
 private:
 

@@ -46,10 +46,10 @@ O programa deve oferecer as seguintes funcionalidades:
 - [x]Árvore Geradora Mínima usando o algoritmo de Kruskal.
 - Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
 - Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
-- Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
+-[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
 - Conjunto de vértices de articulação.
-- Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
-- O programa deve apresentar um menu de opções e repetir até que o usuário escolha sair.
+-[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
+-[x]O programa deve apresentar um menu de opções e repetir até que o usuário escolha sair.
 
 ## Perguntas Frequentes
 1. Quantos membros um grupo pode ter?
