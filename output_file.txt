@@ -1,1 +1,23 @@
 O grafo é acíclico direcionado.
+
+
+
+|9| => 1 => 
+|1| => 7 => 5 => 
+|7| => 2 => 
+|2| => 10 => 
+|10| => 8 => 
+|8| => 6 => 9 => 
+|6| => 4 => 5 => 
+|4| => 5 => 
+|5| => 8 => 3 => 
+|3| => 2 => 
+
+Fecho Transitivo Direto do nó 4: 4 5 3 2 10 8 9 1 7 6 8 
+
+Fecho Transitivo Indireto do nó 7: 9 1 2 10 8 6 4 5 3 
+
+A menor distância entre o nó 5 e o nó 8 é 18724368
+
+A menor distância entre o nó 5 e o nó 8 é 1816080
+

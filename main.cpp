@@ -11,21 +11,24 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
 
     int no;
     int destino;
-    int option;
+    int option = 0;
     string result;
     vector<int> vetorAux;
 
     cout << "Executando a opção " << opt << ":" << endl;
-    cout << "|1| Imprimir no console o resultado" << endl;
-    cout << "|2| Salvar em um arquivo o resultado" << endl;
-    cin >> option;
+    while(option != 1 && option != 2 ){
+        cout << "|1| Imprimir no console o resultado" << endl;
+        cout << "|2| Salvar em um arquivo o resultado" << endl;
+        cin >> option;
+    }
+    
     cout << "=========================================================================================================" << endl;
         
 
     switch (opt)
     {
     case 1:
-        g->imprimeGrafo();
+        result = g->imprimeGrafo();
         break;
 
     case 2:
@@ -118,7 +121,6 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         return;
     }
 
-    cout << "=========================================================================================================" << endl;
     if (option == 1)
     {
         cout << result << endl;
@@ -129,6 +131,8 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         output_file << result << endl;
         cout << "arquivo salvo!!" << endl;
     }
+    cout << "=========================================================================================================" << endl;
+    
 }
 
 //<arquivo_entrada> <arquivo_saida> <Opc_Direc> <Opc_Peso_Aresta> <Opc_Peso_Nos>,
@@ -180,7 +184,7 @@ int main(int argc, char *argv[])
 
     while (!ponderado && input_file >> no_origem >> no_destino)
     {
-        g->insereAresta(no_origem, no_destino);
+        g->insereAresta(no_origem, no_destino, 1 );
     }
     while (ponderado && input_file >> no_origem >> no_destino >> peso)
     {
@@ -216,10 +220,10 @@ int main(int argc, char *argv[])
         cout << "|3| Fecho transitivo indireto." << endl;
         cout << "|4| Caminho minimo por Dijkstra." << endl;
         cout << "|5| Caminho minimo por Floyd." << endl;
-        cout << "|6| Arvore Geradora por Prim(." << endl;
+        cout << "|6| Arvore Geradora por Prim" << endl;
         cout << "|7| Arvore Geradora por Kruskal." << endl;
-        cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno" << endl;
-        cout << "|9| Possui ordenação topologica ou e é acíclico direcionado?." << endl;
+        cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno." << endl;
+        cout << "|9| Possui ordenação topologica ou e é acíclico direcionado?" << endl;
         cout << "|10| Raio, diâmetro, centro e periferia do grafo." << endl;
         cout << "|| Conjunto de vértices de articulação." << endl;
         cout << "|0| Sair das funcionalidades." << endl;

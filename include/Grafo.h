@@ -47,7 +47,7 @@ public:
 
     //--- Caracteristica do Grafo ---
     
-    void imprimeGrafo();
+    string imprimeGrafo();
     No *buscaNo(int no);
     string fechoTransitivoDireto(int idNo);
     string fechoTransitivoIndireto(int idNo);

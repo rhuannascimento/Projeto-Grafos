@@ -67,13 +67,15 @@ No *Grafo::insereNo(int idNo)
 
 /**
  * @brief Imprime o grafo, mostrando os nós e suas arestas.
+ * @return String contendo o grafo.
  */
-void Grafo::imprimeGrafo()
+string Grafo::imprimeGrafo()
 {
+    string result;
 
     if (this->noRaiz == nullptr)
     {
-        return;
+        return "Grafo Vazio";
     }
 
     No *proxNo = this->noRaiz;
@@ -81,28 +83,33 @@ void Grafo::imprimeGrafo()
 
     while (proxNo != nullptr)
     {
-
-        cout << "|" << proxNo->getIdNo() << "| => ";
+        
+        result += "|" + to_string(proxNo->getIdNo()) + "| => ";
+        //cout << "|" << proxNo->getIdNo() << "| => ";
 
         aresta = proxNo->getPrimeiraAresta();
         while (aresta != nullptr)
         {
             if (this->ponderado)
             {
-                cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
+                result += to_string(aresta->getIdNoDestino()) + " (p:" + to_string(aresta->getPesoAresta()) + ") => " ;
+                //cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
                 aresta = aresta->getProxAresta();
             }
             else
             {
-                cout << aresta->getIdNoDestino() << " => ";
+                result += to_string(aresta->getIdNoDestino() ) + " => ";
+                //cout << aresta->getIdNoDestino() << " => ";
                 aresta = aresta->getProxAresta();
             }
         }
 
-        cout << endl;
+        result += "\n";
+        //cout << endl;
 
         proxNo = proxNo->getProxNo();
     }
+    return result;
 }
 
 /**
@@ -437,7 +444,6 @@ int Grafo::floyd(int origem, int destino)
     return distancia[origem][destino];
 }
 
-
 /**
  * @brief Aplica o algoritmo de Prim para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
  */
@@ -577,9 +583,6 @@ string Grafo::kruskalAGM() {
 
     return result;
 }
-
-
-
 
 /**
  * @brief Calcula o diâmetro do grafo.
