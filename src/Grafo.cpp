@@ -37,6 +37,7 @@ Grafo::~Grafo()
         proxNo = proxNo->getProxNo();
         delete temp;
     }
+    noRaiz = ultimoNo = nullptr;
 }
 
 /**
@@ -697,3 +698,78 @@ vector<int> Grafo::calcularPeriferia() {
 
     return periferia;
 }
+
+/**
+ * @brief Calcula a Ordenação Topológica do grafo.
+ * @return Um vetor com a Ordenação Topológica ou um vetor vazio se o grafo não for acíclico direcionado.
+ */
+vector<int> Grafo::ordenacaoTopologica()
+{
+    vector<int> resultado; // Vetor para armazenar a ordenação topológica
+    vector<int> grauEntrada(ordem, 0); // Vetor para armazenar o grau de entrada de cada nó
+    queue<No *> fila; // Fila para realizar a ordenação topológica
+
+    // Calcula o grau de entrada de cada nó
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
+        Aresta *aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
+            grauEntrada[aresta->getIdNoDestino()]++;
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+    // Adiciona nós com grau de entrada zero à fila
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
+        if (grauEntrada[noAtual->getIdNo()] == 0)
+        {
+            fila.push(noAtual);
+        }
+    }
+
+    // Realiza a ordenação topológica
+    while (!fila.empty())
+    {
+        No *noAtual = fila.front();
+        fila.pop();
+
+        resultado.push_back(noAtual->getIdNo());
+
+        Aresta *aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
+            grauEntrada[aresta->getIdNoDestino()]--;
+
+            if (grauEntrada[aresta->getIdNoDestino()] == 0)
+            {
+                fila.push(buscaNo(aresta->getIdNoDestino()));
+            }
+
+            aresta = aresta->getProxAresta();
+        }
+    }
+
+    // Verifica se o grafo é acíclico direcionado
+    for (int grau : grauEntrada)
+    {
+        if (grau > 0)
+        {
+            // Se algum nó ainda tem grau de entrada maior que zero, o grafo possui ciclo
+            return vector<int>(); // Retorna um vetor vazio indicando que o grafo não é acíclico direcionado
+        }
+    }
+
+    return resultado;
+}
+
+
+
+
+
+
+
+
+
+

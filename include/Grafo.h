@@ -67,6 +67,7 @@ public:
     int calcularRaio() ;
     vector<int> calcularCentro();
     vector<int> calcularPeriferia();
+    vector<int> ordenacaoTopologica();
 
 private:
 
