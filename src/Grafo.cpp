@@ -459,6 +459,11 @@ int Grafo::dijkstra(int origem, int destino)
         return -1;
     }
 
+    if (noOrigem == noDestino)
+    {
+        return 0;
+    }
+
     vector<int> distanciaMinima(ordem, numeric_limits<int>::max());
 
     distanciaMinima[origem] = 0;
@@ -507,6 +512,10 @@ int Grafo::floyd(int origem, int destino)
 {
     string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
+
+    if(){
+        
+    }
 
     for (int i = 1; i <= ordem; i++)
     {
