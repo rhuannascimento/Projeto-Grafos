@@ -47,7 +47,7 @@ O programa deve oferecer as seguintes funcionalidades:
 - Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
 - Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
 -[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
-- Conjunto de vértices de articulação.
+-[x]Conjunto de vértices de articulação.
 -[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
 -[x]O programa deve apresentar um menu de opções e repetir até que o usuário escolha sair.
 

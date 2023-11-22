@@ -241,10 +241,10 @@ int main(int argc, char *argv[])
     6[x] Árvore Geradora Mínima usando o algoritmo de Prim.
     7[x] Árvore Geradora Mínima usando o algoritmo de Kruskal.
     8 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
-    9[x] Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
+    9 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
     10[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
     11[x] Conjunto de vértices de articulação.
-    [x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
+    12[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
     */
     while (!quit)
     {
