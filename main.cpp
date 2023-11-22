@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
+void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponderado)
 {
 
     int no;
@@ -16,14 +16,14 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     vector<int> vetorAux = {};
 
     cout << "Executando a opção " << opt << ":" << endl;
-    while(option != 1 && option != 2 ){
+    while (option != 1 && option != 2)
+    {
         cout << "|1| Imprimir no console o resultado" << endl;
         cout << "|2| Salvar em um arquivo o resultado" << endl;
         cin >> option;
     }
-    
+
     cout << "=========================================================================================================" << endl;
-        
 
     switch (opt)
     {
@@ -32,18 +32,35 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         break;
 
     case 2:
-        cout << "Qual nó você deseja encontrar o fecho transitivo direto?" << endl;
-        cin >> no;
 
-        result = g->fechoTransitivoDireto(no);
+        if (digrafo)
+        {
+
+            cout << "Qual nó você deseja encontrar o fecho transitivo direto?" << endl;
+            cin >> no;
+
+            result = g->fechoTransitivoDireto(no);
+        }
+        else
+        {
+            cout << "O grafo não é direcionado!" << endl;
+        }
 
         break;
 
     case 3:
-        cout << "Qual nó você deseja encontrar o fecho transitivo indireto?" << endl;
-        cin >> no;
 
-        result = g->fechoTransitivoIndireto(no);
+        if (digrafo)
+        {
+            cout << "Qual nó você deseja encontrar o fecho transitivo indireto?" << endl;
+            cin >> no;
+
+            result = g->fechoTransitivoIndireto(no);
+        }
+        else
+        {
+            cout << "O grafo não é direcionado!" << endl;
+        }
 
         break;
 
@@ -82,34 +99,50 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     case 9:
         vetorAux = g->ordenacaoTopologica();
 
-        if( vetorAux.size() == 0){
+        if (vetorAux.size() == 0)
+        {
             result = "O grafo é acíclico direcionado.\n";
             break;
         }
 
         result = "Odenação topologica do grafo: ";
-        for(int i = 0; i < vetorAux.size(); i++){
-            result +=  vetorAux[i] + "  ";
+        for (int i = 0; i < vetorAux.size(); i++)
+        {
+            result += vetorAux[i] + "  ";
         }
         result += "\n";
 
         break;
 
     case 10:
-        result = "Raio do Grafo: " + to_string(g->calcularRaio()) + "\n";
+        if (ponderado)
+        {
+            result = "Raio do Grafo: " + to_string(g->calcularRaio()) + "\n";
 
-        result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
+            result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
 
-        result += "Centro do Grafo: " + g->calcularCentro() + "\n";
+            result += "Centro do Grafo: " + g->calcularCentro() + "\n";
 
-        result += "Periferia do Grafo: " + g->calcularPeriferia() + "\n";
+            result += "Periferia do Grafo: " + g->calcularPeriferia() + "\n";
+        }
+        else
+        {
+            cout << "O grafo não é ponderado!" << endl;
+        }
 
         break;
     case 11:
-        result = "Conjunto de vértices de articulação: " +  g->encontrarVerticesDeArticulacao();
-        
-        
-        
+
+        if (!digrafo)
+        {
+
+            result = "Conjunto de vértices de articulação: " + g->encontrarVerticesDeArticulacao();
+        }
+        else
+        {
+            cout << "O grafo é direcionado!" << endl;
+        }
+
         break;
 
     default:
@@ -122,12 +155,11 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     }
     else if (option == 2)
     {
-        
+
         output_file << result << endl;
         cout << "arquivo salvo!!" << endl;
     }
     cout << "=========================================================================================================" << endl;
-    
 }
 
 //<arquivo_entrada> <arquivo_saida> <Opc_Direc> <Opc_Peso_Aresta> <Opc_Peso_Nos>,
@@ -180,7 +212,7 @@ int main(int argc, char *argv[])
 
     while (!ponderado && input_file >> no_origem >> no_destino)
     {
-        g->insereAresta(no_origem, no_destino, 1 );
+        g->insereAresta(no_origem, no_destino, 1);
     }
     while (ponderado && !pesoNo && input_file >> no_origem >> no_destino >> peso)
     {
@@ -242,7 +274,7 @@ int main(int argc, char *argv[])
             quit = true;
             break;
         default:
-            execFunc(g, option, output_file, *argv[4]);
+            execFunc(g, option, output_file, digrafo, ponderado);
             break;
         }
     }
