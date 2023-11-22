@@ -447,58 +447,64 @@ string Grafo::fechoTransitivoIndireto(int idNo)
  * @param destino O ID do nó de destino.
  * @return A distância mínima entre os nós, ou -1 se não houver caminho.
  */
-int Grafo::dijkstra(int origem, int destino)
-{
-
+int Grafo::dijkstra(int origem, int destino) {
+   
     No *noOrigem = buscaNo(origem);
     No *noDestino = buscaNo(destino);
 
-    if (noOrigem == nullptr || noDestino == nullptr)
-    {
-        return -1;
+    if (noOrigem == nullptr || noDestino == nullptr) {
+        cout << "Nós de origem ou destino não encontrados no grafo." << endl;
+        return -1; 
     }
-
     if (noOrigem == noDestino)
     {
         return 0;
     }
 
-    vector<int> distanciaMinima(ordem, numeric_limits<int>::max());
+ 
+    vector<int> distancia(ordem + 1, INT_MAX);
+    distancia[origem] = 0;
 
-    distanciaMinima[origem] = 0;
+    set<int> visitados;
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
-    filaPrioridade.push(make_pair(0, origem));
+  
+    while (visitados.size() < ordem) {
+       
+        int verticeAtual = -1;
+        int distanciaMinima = INT_MAX;
 
-    while (!filaPrioridade.empty())
-    {
-        int u = filaPrioridade.top().second;
-        filaPrioridade.pop();
-
-        Aresta *aresta = buscaNo(u)->getPrimeiraAresta();
-        while (aresta != nullptr)
-        {
-            int v = aresta->getIdNoDestino();
-            int peso = aresta->getPesoAresta();
-
-            if (distanciaMinima[u] + peso < distanciaMinima[v])
-            {
-                distanciaMinima[v] = distanciaMinima[u] + peso;
-                filaPrioridade.push(make_pair(distanciaMinima[v], v));
+        for (int i = 1; i <= ordem; ++i) {
+            if (visitados.find(i) == visitados.end() && distancia[i] < distanciaMinima) {
+                verticeAtual = i;
+                distanciaMinima = distancia[i];
             }
+        }
 
+        if (verticeAtual == -1) {
+            break;
+        }
+
+        visitados.insert(verticeAtual);
+
+        No *noAtual = buscaNo(verticeAtual);
+
+        Aresta *aresta = noAtual->getPrimeiraAresta();
+
+        while(aresta != nullptr){
+            No *vizinho =  buscaNo(aresta->getIdNoDestino()); 
+            int custo = aresta->getPesoAresta();
+            distancia[vizinho->getIdNo()] = min(distancia[vizinho->getIdNo()], distancia[verticeAtual] + custo);
             aresta = aresta->getProxAresta();
         }
     }
 
-    int distanciaDestino = distanciaMinima[destino];
-
-    if (distanciaDestino == numeric_limits<int>::max())
+    if (distancia[destino] == INT_MAX)
     {
         return -1;
     }
 
-    return distanciaDestino;
+   
+    return distancia[destino];
 }
 
 /**
@@ -517,6 +523,7 @@ int Grafo::floyd(int origem, int destino)
 
     if (noOrigem == nullptr || noDestino == nullptr)
     {
+         cout << "Nós de origem ou destino não encontrados no grafo." << endl;
         return -1;
     }
 
