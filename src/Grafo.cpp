@@ -452,7 +452,6 @@ int Grafo::dijkstra(int origem, int destino)
 
     No *noOrigem = buscaNo(origem);
     No *noDestino = buscaNo(destino);
-    string fechoDireto;
 
     if (noOrigem == nullptr || noDestino == nullptr)
     {
@@ -513,8 +512,17 @@ int Grafo::floyd(int origem, int destino)
     string result;
     vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
 
-    if(){
-        
+    No *noOrigem = buscaNo(origem);
+    No *noDestino = buscaNo(destino);
+
+    if (noOrigem == nullptr || noDestino == nullptr)
+    {
+        return -1;
+    }
+
+    if (noOrigem == noDestino)
+    {
+        return 0;
     }
 
     for (int i = 1; i <= ordem; i++)
