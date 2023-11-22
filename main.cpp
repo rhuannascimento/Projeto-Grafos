@@ -12,8 +12,8 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
     int no;
     int destino;
     int option = 0;
-    string result;
-    vector<int> vetorAux;
+    string result = "";
+    vector<int> vetorAux = {};
 
     cout << "Executando a opção " << opt << ":" << endl;
     while(option != 1 && option != 2 ){
@@ -53,7 +53,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         cout << "A qual nó você deseja chegar?" << endl;
         cin >> destino;
 
-        result = "A menor distância entre o nó " + to_string(no) + " e o nó " + to_string(destino) + " é " + to_string(g->dijkstra(no, destino)) + "\n";
+        result = "A menor distância (Dijkstra) entre o nó (" + to_string(no) + ") e o nó (" + to_string(destino) + ") é: " + to_string(g->dijkstra(no, destino)) + "\n";
 
         break;
 
@@ -63,7 +63,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         cout << "A qual nó você deseja chegar?" << endl;
         cin >> destino;
 
-        result = "Distância mínima entre os nós" + to_string(no) + " e " + to_string(destino) + " é: " + to_string(g->floyd(no, destino));
+        result = "A menor distância (Floyd) entre o nó (" + to_string(no) + ") e o nó (" + to_string(destino) + ") é: " + to_string(g->floyd(no, destino)) + "\n";
 
         break;
 
@@ -83,7 +83,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         vetorAux = g->ordenacaoTopologica();
 
         if( vetorAux.size() == 0){
-            result = "O grafo é acíclico direcionado.";
+            result = "O grafo é acíclico direcionado.\n";
             break;
         }
 
@@ -91,30 +91,25 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         for(int i = 0; i < vetorAux.size(); i++){
             result +=  vetorAux[i] + "  ";
         }
+        result += "\n";
+
         break;
 
     case 10:
         result = "Raio do Grafo: " + to_string(g->calcularRaio()) + "\n";
+
         result += "Diâmetro do Grafo: " + to_string(g->calcularDiametro()) + "\n";
 
-        vetorAux = g->calcularCentro();
+        result += "Centro do Grafo: " + g->calcularCentro() + "\n";
 
-        result += "Centro do Grafo: ";
-        for (int i = 0; i < vetorAux.size(); i++)
-        {
-            result += to_string(vetorAux[i]) + " ";
-        }
-        result += "\n";
+        result += "Periferia do Grafo: " + g->calcularPeriferia() + "\n";
 
-        vetorAux = g->calcularPeriferia();
-
-        result += "Periferia do Grafo: ";
-        for (int i = 0; i < vetorAux.size(); i++)
-        {
-            result += to_string(vetorAux[i]) + " ";
-        }
-        result += "\n";
-
+        break;
+    case 11:
+        result = "Conjunto de vértices de articulação: " +  g->encontrarVerticesDeArticulacao();
+        
+        
+        
         break;
 
     default:
@@ -214,9 +209,9 @@ int main(int argc, char *argv[])
     6[x] Árvore Geradora Mínima usando o algoritmo de Prim.
     7[x] Árvore Geradora Mínima usando o algoritmo de Kruskal.
     8 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
-    9 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
+    9[x] Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
     10[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
-    11 Conjunto de vértices de articulação.
+    11[x] Conjunto de vértices de articulação.
     [x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
     */
     while (!quit)
@@ -234,7 +229,7 @@ int main(int argc, char *argv[])
         cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno." << endl;
         cout << "|9| Possui ordenação topologica ou e é acíclico direcionado?" << endl;
         cout << "|10| Raio, diâmetro, centro e periferia do grafo." << endl;
-        cout << "|| Conjunto de vértices de articulação." << endl;
+        cout << "|11| Conjunto de vértices de articulação." << endl;
         cout << "|0| Sair das funcionalidades." << endl;
         cout << "Insira a opcao: ";
         cin >> option;

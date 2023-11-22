@@ -673,8 +673,8 @@ string Grafo::kruskalAGM()
     }
 
     string result = "";
-
-    result += "Arestas da Árvore Geradora Mínima: \n";
+   
+    result +=  "Arestas da Árvore Geradora Mínima (kruskal): \n";
     int pesoTotal = 0;
     for (auto &aresta : arvoreGeradoraMinima)
     {
@@ -748,10 +748,11 @@ int Grafo::calcularRaio()
  * @brief Calcula o centro do grafo.
  * @return Um vetor de inteiros com os centros do grafo.
  */
-vector<int> Grafo::calcularCentro()
-{
+string Grafo::calcularCentro() {
     int menorExcentricidade = INT_MAX;
-    vector<int> centro = {};
+
+    int contador = 0;
+    string centro;
 
     for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
     {
@@ -766,8 +767,14 @@ vector<int> Grafo::calcularCentro()
         if (excentricidadeAtual < menorExcentricidade)
         {
             menorExcentricidade = excentricidadeAtual;
-            centro.push_back(noAtual->getIdNo());
+            
+            centro += to_string(noAtual->getIdNo()) + " " ;
+            contador = 1;
         }
+    }
+
+    if(contador == 0){
+        return "Grafo nao possui centro";
     }
 
     return centro;
@@ -777,13 +784,12 @@ vector<int> Grafo::calcularCentro()
  * @brief Calcula a periferia do grafo.
  * @return Um vetor de inteiros com as perifeiras do grafo.
  */
-vector<int> Grafo::calcularPeriferia()
-{
+string Grafo::calcularPeriferia() {
     int maiorExcentricidade = INT_MIN;
-    vector<int> periferia;
+    string periferia;
+    int contador = 0;
 
-    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
-    {
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
         int excentricidadeAtual = 0;
 
         for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
@@ -805,10 +811,14 @@ vector<int> Grafo::calcularPeriferia()
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
-        if (excentricidadeAtual == maiorExcentricidade)
-        {
-            periferia.push_back(noAtual->getIdNo());
+        if (excentricidadeAtual == maiorExcentricidade) {
+            periferia += to_string(noAtual->getIdNo()) + " " ;
+            contador = 1;
         }
+    }
+
+    if(contador == 0 ){
+        return "Grafo nao possui periferia";
     }
 
     return periferia;
@@ -878,3 +888,70 @@ vector<int> Grafo::ordenacaoTopologica()
 
     return resultado;
 }
+
+void Grafo::encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao) {
+    int filhos = 0;
+
+    descoberta[u->getIdNo()] = baixo[u->getIdNo()] = ++tempo;
+    visitado[u->getIdNo()] = true;
+
+    Aresta* aresta = u->getPrimeiraAresta();
+
+    while (aresta != nullptr) {
+        No* v = buscaNo(aresta->getIdNoDestino());
+
+        if (!visitado[v->getIdNo()]) {
+            filhos++;
+            encontrarArticulacaoDFS(v, u, tempo, descoberta, baixo, visitado, verticesDeArticulacao);
+
+            baixo[u->getIdNo()] = min(baixo[u->getIdNo()], baixo[v->getIdNo()]);
+
+            // Verifica se u é vértice de articulação
+            if (baixo[v->getIdNo()] >= descoberta[u->getIdNo()] && pai != nullptr) {
+                verticesDeArticulacao.insert(u->getIdNo());
+            }
+        } else if (v != pai) {
+            baixo[u->getIdNo()] = min(baixo[u->getIdNo()], descoberta[v->getIdNo()]);
+        }
+
+        aresta = aresta->getProxAresta();
+    }
+
+    // Verifica se u é vértice de articulação (caso especial para a raiz da árvore DFS)
+    if (pai == nullptr && filhos > 1) {
+        verticesDeArticulacao.insert(u->getIdNo());
+    }
+}
+
+/**
+ * Encontra os vértices de articulação no grafo.
+ * @return Uma string contendo os vértices de articulação.
+ */
+string Grafo::encontrarVerticesDeArticulacao() {
+    vector<int> descoberta(ordem, -1);
+    vector<int> baixo(ordem, -1);
+    vector<bool> visitado(ordem, false);
+    set<int> verticesDeArticulacao;
+
+    int tempo = 0;
+
+    // Inicia a DFS para encontrar os vértices de articulação
+    for (No* noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+        if (!visitado[noAtual->getIdNo()]) {
+            encontrarArticulacaoDFS(noAtual, nullptr, tempo, descoberta, baixo, visitado, verticesDeArticulacao);
+        }
+    }
+
+    // Formata os resultados em uma string
+    string resultado = "Vértices de Articulação: ";
+    for (int vertice : verticesDeArticulacao) {
+        resultado += to_string(vertice) + " ";
+    }
+
+    return resultado + "\n";
+}
+
+
+
+
+
