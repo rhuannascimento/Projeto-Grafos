@@ -70,8 +70,12 @@ public:
     string calcularCentro();
     string calcularPeriferia();
     string ordenacaoTopologica();
+
     string encontrarVerticesDeArticulacao();
     void encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao);
+
+    string arvoreCaminhamentoProfundidade(int idNo);
+    string AUXcaminhamentoProfundidade(No *noAtual, vector<bool> &visitados) ;
 
 private:
 

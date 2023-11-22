@@ -96,6 +96,16 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
 
         break;
 
+    case 8:
+        cout << "Qual nó voce deseja iniciar a arvore de caminhamento: " << endl;
+        cin >> no ;
+
+
+        result = g->arvoreCaminhamentoProfundidade(no);
+        
+
+        break;
+
     case 9:
         if(digrafo == false){
             result = "A ordenação topológica só é aplicável a grafos direcionados.";
@@ -233,8 +243,8 @@ int main(int argc, char *argv[])
     5[x] Caminho mínimo entre dois vértices usando algoritmo de Floyd.
     6[x] Árvore Geradora Mínima usando o algoritmo de Prim.
     7[x] Árvore Geradora Mínima usando o algoritmo de Kruskal.
-    8 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
-    9 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
+    8[x] Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
+    9[x] Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
     10[x] Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
     11[x] Conjunto de vértices de articulação.
     12[x] Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
@@ -251,7 +261,7 @@ int main(int argc, char *argv[])
         cout << "|5| Caminho minimo por Floyd." << endl;
         cout << "|6| Arvore Geradora por Prim" << endl;
         cout << "|7| Arvore Geradora por Kruskal." << endl;
-        cout << "|| Arvore de caminhamento em profundidade destacando aresta de retorno." << endl;
+        cout << "|8| Arvore de caminhamento em profundidade destacando aresta de retorno." << endl;
         cout << "|9| Possui ordenação topologica ou e é acíclico direcionado?" << endl;
         cout << "|10| Raio, diâmetro, centro e periferia do grafo." << endl;
         cout << "|11| Conjunto de vértices de articulação." << endl;

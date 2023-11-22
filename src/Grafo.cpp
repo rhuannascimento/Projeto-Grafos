@@ -975,7 +975,67 @@ string Grafo::encontrarVerticesDeArticulacao() {
     return resultado + "\n";
 }
 
+/**
+ * @brief Realiza o caminhamento em profundidade (DFS) a partir de um nó,
+ * destacando as arestas de retorno.
+ * @param noAtual O nó de origem para iniciar o caminhamento.
+ * @param visitados Um vetor que rastreia os nós visitados durante o caminhamento.
+ * @return Uma string contendo o resultado do caminhamento.
+ */
+string Grafo::AUXcaminhamentoProfundidade(No *noAtual, vector<bool> &visitados) {
+    string resultado;
 
+    stack<pair<No *, Aresta *>> pilha;
+    pilha.push({noAtual, nullptr});
+
+    while (!pilha.empty()) {
+        auto [no, arestaAnterior] = pilha.top();
+        pilha.pop();
+
+        if (!visitados[no->getIdNo()]) {
+            visitados[no->getIdNo()] = true;
+
+            resultado += "Visitando nó " + to_string(no->getIdNo());
+
+            if (arestaAnterior != nullptr) {
+                resultado += " (aresta de retorno de " + to_string(arestaAnterior->getIdNoDestino()) + ")";
+            }
+
+            resultado += "\n";
+
+            Aresta *aresta = no->getPrimeiraAresta();
+            while (aresta != nullptr) {
+                pilha.push({buscaNo(aresta->getIdNoDestino()), aresta});
+                aresta = aresta->getProxAresta();
+            }
+        }
+    }
+
+    return resultado;
+}
+
+/**
+ * @brief Árvore de caminhamento em profundidade a partir de um nó,
+ * destacando as arestas de retorno.
+ * @param idNo O ID do nó de origem.
+ * @return Uma string contendo o resultado da Árvore de Caminhamento em Profundidade.
+ */
+string Grafo::arvoreCaminhamentoProfundidade(int idNo) {
+    No *noOrigem = buscaNo(idNo);
+    string resultado;
+
+    if (noOrigem == nullptr) {
+        resultado = "Nó de origem (" + to_string(idNo) + ") não encontrado.\n";
+        return resultado;
+    }
+
+    vector<bool> visitados(ordem, false);
+
+    resultado = "Árvore de Caminhamento em Profundidade a partir do nó " + to_string(idNo) + ":\n";
+    resultado += AUXcaminhamentoProfundidade(noOrigem, visitados);
+
+    return resultado;
+}
 
 
 
