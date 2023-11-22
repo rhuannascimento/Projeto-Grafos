@@ -65,9 +65,11 @@ public:
 
     int calcularDiametro();
     int calcularRaio() ;
-    vector<int> calcularCentro();
-    vector<int> calcularPeriferia();
+    string calcularCentro();
+    string calcularPeriferia();
     vector<int> ordenacaoTopologica();
+    string encontrarVerticesDeArticulacao();
+    void encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao);
 
 private:
 
