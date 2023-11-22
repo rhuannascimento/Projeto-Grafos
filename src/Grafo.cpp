@@ -760,7 +760,7 @@ string Grafo::calcularCentro() {
 
         for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
         {
-            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
@@ -794,20 +794,22 @@ string Grafo::calcularPeriferia() {
 
         for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
         {
-            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
         maiorExcentricidade = max(maiorExcentricidade, excentricidadeAtual);
     }
 
+
     for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
     {
+
         int excentricidadeAtual = 0;
 
         for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
         {
-            int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
+            int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
@@ -889,6 +891,9 @@ vector<int> Grafo::ordenacaoTopologica()
     return resultado;
 }
 
+/**
+ * Auxiliar da função que encontra os vértices de articulação no grafo.
+ */
 void Grafo::encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao) {
     int filhos = 0;
 
