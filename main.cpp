@@ -53,7 +53,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         cout << "A qual nó você deseja chegar?" << endl;
         cin >> destino;
 
-        result = "A menor distância entre o nó " + to_string(no) + " e o nó " + to_string(destino) + " é " + to_string(g->dijkstra(no, destino)) + "\n";
+        result = "A menor distância (Dijkstra) entre o nó (" + to_string(no) + ") e o nó (" + to_string(destino) + " é: " + to_string(g->dijkstra(no, destino)) + "\n";
 
         break;
 
@@ -63,7 +63,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, int ponderado)
         cout << "A qual nó você deseja chegar?" << endl;
         cin >> destino;
 
-        result = "Distância mínima entre os nós" + to_string(no) + " e " + to_string(destino) + " é: " + to_string(g->floyd(no, destino));
+        result = "A menor distância (Floyd) entre o nó (" + to_string(no) + ") e o nó (" + to_string(destino) + ") é: " + to_string(g->floyd(no, destino)) + "\n";
 
         break;
 

@@ -21,3 +21,13 @@ A menor distância entre o nó 5 e o nó 8 é 18724368
 
 A menor distância entre o nó 5 e o nó 8 é 1816080
 
+A menor distância entre o nó 10 e o nó 5 é 3
+
+Distância mínima (Floyd) entre os nós3 e 5 é: 5
+Distância mínima (Floyd) entre os nós [3] e [5] é: 5
+Distância mínima (Floyd) entre os nós [3] e [5] é: 5
+A menor distância (Floyd) entre o nó (1) e o nó (5) é: 1
+
+A menor distância (Floyd) entre o nó (3) e o nó (6) é: 4
+
+Não é possível AGM em digrafos!
