@@ -11,9 +11,11 @@ class Aresta;
 class No {
 public:
     No(int idNo);
+    No(int idNo, int peso);
     ~No();
 
     int getIdNo ();
+    int getPesoNo();
     No * getProxNo();
     Aresta * getPrimeiraAresta(){return primeiraAresta;}
 

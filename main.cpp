@@ -178,17 +178,26 @@ int main(int argc, char *argv[])
     int no_origem, no_destino;
     int ordem;
     int peso;
+    int peso2;
     input_file >> ordem;
 
-    Grafo *g = new Grafo(digrafo, ponderado, ordem);
+    Grafo *g = new Grafo(digrafo, ponderado, ordem, pesoNo);
 
     while (!ponderado && input_file >> no_origem >> no_destino)
     {
         g->insereAresta(no_origem, no_destino, 1 );
     }
-    while (ponderado && input_file >> no_origem >> no_destino >> peso)
+    while (ponderado && !pesoNo && input_file >> no_origem >> no_destino >> peso)
     {
         g->insereAresta(no_origem, no_destino, peso);
+    }
+    while (pesoNo && !ponderado && input_file >> no_origem >> no_destino >> peso)
+    {
+        g->insereAresta(no_origem, no_destino, peso);
+    }
+    while (pesoNo && ponderado && input_file >> no_origem >> no_destino >> peso >> peso2)
+    {
+        g->insereAresta(no_origem, no_destino, peso, peso2);
     }
 
     //================================================================================================================

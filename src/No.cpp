@@ -16,6 +16,15 @@ No::No(int idNo) {
     this->proxNo = nullptr;
 }
 
+No::No(int idNo, int peso) {
+    this->idNo = idNo;
+    this->pesoNo = peso;
+    this->primeiraAresta = nullptr;
+    this->ultimaAresta = nullptr;
+    this->proxNo = nullptr;
+}
+
+
 No::~No() {
     // Libere a memória alocada para as arestas
     Aresta *proximaAresta = primeiraAresta;
@@ -26,6 +35,10 @@ No::~No() {
     }
 }
 
+
+int No::getPesoNo(){
+    return pesoNo;
+}
 
 /**
  * @brief Obtém o ID do nó.

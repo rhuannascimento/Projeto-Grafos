@@ -12,11 +12,12 @@
  * @param ponderado Indica se o grafo é ponderado (true) ou não (false).
  * @param ordem O número de nós no grafo.
  */
-Grafo::Grafo(bool digrafo, bool ponderado, int ordem)
+Grafo::Grafo(bool digrafo, bool ponderado, int ordem, bool noPonderado)
 {
     this->digrafo = digrafo;
     this->ponderado = ponderado;
     this->ordem = ordem;
+    this->noPonderado = noPonderado;
     /*
     this->numAresta = numAresta;
     this->weigthNo = weigthNo;
@@ -66,6 +67,32 @@ No *Grafo::insereNo(int idNo)
 }
 
 /**
+ * @brief Insere um novo nó no grafo.
+ * @param idNo O ID do nó a ser inserido.
+ * @param peso O peso do nó a ser inserido.
+ * @return Um ponteiro para o nó recém-inserido.
+ */
+No *Grafo::insereNo(int idNo, int peso)
+{
+
+    No *novoNo = new No(idNo, peso);
+
+    if (this->noRaiz == nullptr)
+    {
+        this->noRaiz = novoNo;
+        this->ultimoNo = novoNo;
+        novoNo->setProxNo(nullptr);
+        return novoNo;
+    }
+
+    this->ultimoNo->setProxNo(novoNo);
+    this->ultimoNo = novoNo;
+    novoNo->setProxNo(nullptr);
+
+    return novoNo;
+}
+
+/**
  * @brief Imprime o grafo, mostrando os nós e suas arestas.
  * @return String contendo o grafo.
  */
@@ -83,29 +110,36 @@ string Grafo::imprimeGrafo()
 
     while (proxNo != nullptr)
     {
-        
+
         result += "|" + to_string(proxNo->getIdNo()) + "| => ";
-        //cout << "|" << proxNo->getIdNo() << "| => ";
+        // cout << "|" << proxNo->getIdNo() << "| => ";
 
         aresta = proxNo->getPrimeiraAresta();
         while (aresta != nullptr)
         {
             if (this->ponderado)
             {
-                result += to_string(aresta->getIdNoDestino()) + " (p:" + to_string(aresta->getPesoAresta()) + ") => " ;
-                //cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
+                result += to_string(aresta->getIdNoDestino()) + " (p:" + to_string(aresta->getPesoAresta()) + ") => ";
+                // cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
+                aresta = aresta->getProxAresta();
+            }
+            else if (this->noPonderado)
+            {
+                No *noImpresso = buscaNo(aresta->getIdNoDestino());
+                result += to_string(aresta->getIdNoDestino()) + " (p do nó:" + to_string(noImpresso->getPesoNo()) + ") => ";
+                // cout << aresta->getIdNoDestino() << " (p:" << aresta->getPesoAresta() << ") => ";
                 aresta = aresta->getProxAresta();
             }
             else
             {
-                result += to_string(aresta->getIdNoDestino() ) + " => ";
-                //cout << aresta->getIdNoDestino() << " => ";
+                result += to_string(aresta->getIdNoDestino()) + " => ";
+                // cout << aresta->getIdNoDestino() << " => ";
                 aresta = aresta->getProxAresta();
             }
         }
 
         result += "\n";
-        //cout << endl;
+        // cout << endl;
 
         proxNo = proxNo->getProxNo();
     }
@@ -155,12 +189,78 @@ bool Grafo::insereAresta(int noOrigem, int noDestino, int peso)
 
     if (origem == nullptr)
     {
-        origem = insereNo(noOrigem);
+        if (this->noPonderado)
+        {
+            origem = insereNo(noOrigem, peso);
+        }
+        else
+        {
+            origem = insereNo(noOrigem);
+        }
     }
 
     if (destino == nullptr)
     {
-        destino = insereNo(noDestino);
+        if (this->noPonderado)
+        {
+            destino = insereNo(noDestino, peso);
+        }
+        else
+        {
+            destino = insereNo(noDestino);
+        }
+    }
+
+    if (this->isDIgrafo())
+    {
+        if (this->noPonderado)
+        {
+            origem->insertAresta(noDestino);
+        }
+        else
+        {
+            origem->insertAresta(noDestino, peso);
+        }
+    }
+    else
+    {
+        if (this->noPonderado)
+        {
+            origem->insertAresta(noDestino);
+            destino->insertAresta(noOrigem);
+        }
+        else
+        {
+            origem->insertAresta(noDestino, peso);
+            destino->insertAresta(noOrigem, peso);
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @brief Insere uma aresta no grafo entre dois nós.
+ * @param noOrigem O ID do nó de origem.
+ * @param noDestino O ID do nó de destino.
+ * @param peso O peso da aresta (opcional, apenas se o grafo for ponderado).
+ * @param peso2 O peso do no (opcional, apenas se o grafo for NoPonderado).
+ * @return true se a operação foi bem-sucedida, false caso contrário.
+ */
+bool Grafo::insereAresta(int noOrigem, int noDestino, int peso, int peso2)
+{
+
+    No *origem = this->buscaNo(noOrigem);
+    No *destino = this->buscaNo(noDestino);
+
+    if (origem == nullptr)
+    {
+        origem = insereNo(noOrigem, peso2);
+    }
+
+    if (destino == nullptr)
+    {
+        destino = insereNo(noDestino, peso2);
     }
 
     if (this->isDIgrafo())
@@ -389,7 +489,6 @@ int Grafo::dijkstra(int origem, int destino)
 
     int distanciaDestino = distanciaMinima[destino];
 
-
     if (distanciaDestino == numeric_limits<int>::max())
     {
         return -1;
@@ -440,45 +539,48 @@ int Grafo::floyd(int origem, int destino)
         return -1;
     }
 
- 
     return distancia[origem][destino];
 }
 
 /**
  * @brief Aplica o algoritmo de Prim para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
  */
-string Grafo::primAGM() {
+string Grafo::primAGM()
+{
 
-
-    if(this->digrafo){
+    if (this->digrafo)
+    {
         return "Não é possível AGM em digrafos!";
     }
-  
-    vector<bool> inAGM(ordem, false); 
-    vector<int> chave(ordem, INT_MAX);  
-    vector<int> pai(ordem, -1);  
 
-    
+    vector<bool> inAGM(ordem, false);
+    vector<int> chave(ordem, INT_MAX);
+    vector<int> pai(ordem, -1);
+
     int raiz = noRaiz->getIdNo();
     chave[raiz - 1] = 0;
 
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
     filaPrioridade.push(make_pair(0, raiz));
 
-    while (!filaPrioridade.empty()) {
+    while (!filaPrioridade.empty())
+    {
         int u = filaPrioridade.top().second;
         filaPrioridade.pop();
 
-        if (inAGM[u - 1]) continue;  
+        if (inAGM[u - 1])
+            continue;
 
         inAGM[u - 1] = true;
 
-        Aresta* aresta = buscaNo(u)->getPrimeiraAresta();
-        while (aresta != nullptr) {
+        Aresta *aresta = buscaNo(u)->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
             int v = aresta->getIdNoDestino();
             int peso = aresta->getPesoAresta();
 
-            if (!inAGM[v - 1] && peso < chave[v - 1]) {
+            if (!inAGM[v - 1] && peso < chave[v - 1])
+            {
                 chave[v - 1] = peso;
                 pai[v - 1] = u;
 
@@ -489,19 +591,19 @@ string Grafo::primAGM() {
         }
     }
 
-
     string result = "";
-
 
     int pesoTotal = 0;
     result += "Arestas da Árvore Geradora Mínima (Prim): \n";
-    for (int i = 0; i < ordem; i++) {
-        if (pai[i] != -1) {
+    for (int i = 0; i < ordem; i++)
+    {
+        if (pai[i] != -1)
+        {
             int u = pai[i];
             int v = i + 1;
             int peso = chave[i];
 
-            result +=  to_string(u) + " " + to_string(v) + " " + to_string(peso)  + "\n";
+            result += to_string(u) + " " + to_string(v) + " " + to_string(peso) + "\n";
 
             pesoTotal += peso;
         }
@@ -515,18 +617,21 @@ string Grafo::primAGM() {
 /**
  * @brief Aplica o algoritmo de Kruskal para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
  */
-string Grafo::kruskalAGM() {
+string Grafo::kruskalAGM()
+{
 
-    if(this->digrafo){
+    if (this->digrafo)
+    {
         return "Não é possível AGM em digrafos!";
     }
-   
+
     vector<pair<int, pair<int, int>>> arestasOrdenadas;
 
-   
-    for (No* noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
-        Aresta* aresta = noAtual->getPrimeiraAresta();
-        while (aresta != nullptr) {
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
+        Aresta *aresta = noAtual->getPrimeiraAresta();
+        while (aresta != nullptr)
+        {
             int noOrigem = noAtual->getIdNo();
             int noDestino = aresta->getIdNoDestino();
             int peso = aresta->getPesoAresta();
@@ -535,33 +640,32 @@ string Grafo::kruskalAGM() {
         }
     }
 
- 
     sort(arestasOrdenadas.begin(), arestasOrdenadas.end());
-
 
     vector<int> conjunto(ordem + 1);
 
-   
-    for (int i = 1; i <= ordem; ++i) {
+    for (int i = 1; i <= ordem; ++i)
+    {
         conjunto[i] = i;
     }
 
-   
     vector<pair<int, pair<int, int>>> arvoreGeradoraMinima;
 
-    for (int i = 0; i < arestasOrdenadas.size(); ++i) {
+    for (int i = 0; i < arestasOrdenadas.size(); ++i)
+    {
         int origem = arestasOrdenadas[i].second.first;
         int destino = arestasOrdenadas[i].second.second;
 
-       
-        if (conjunto[origem] != conjunto[destino]) {
+        if (conjunto[origem] != conjunto[destino])
+        {
             arvoreGeradoraMinima.push_back(arestasOrdenadas[i]);
 
-          
             int conjuntoOrigem = conjunto[origem];
             int conjuntoDestino = conjunto[destino];
-            for (int j = 1; j <= ordem; ++j) {
-                if (conjunto[j] == conjuntoDestino) {
+            for (int j = 1; j <= ordem; ++j)
+            {
+                if (conjunto[j] == conjuntoDestino)
+                {
                     conjunto[j] = conjuntoOrigem;
                 }
             }
@@ -569,10 +673,11 @@ string Grafo::kruskalAGM() {
     }
 
     string result = "";
-   
-    result +=  "Arestas da Árvore Geradora Mínima: \n";
+
+    result += "Arestas da Árvore Geradora Mínima: \n";
     int pesoTotal = 0;
-    for (auto& aresta : arvoreGeradoraMinima) {
+    for (auto &aresta : arvoreGeradoraMinima)
+    {
         int origem = aresta.second.first;
         int destino = aresta.second.second;
         int peso = aresta.first;
@@ -628,9 +733,8 @@ int Grafo::calcularRaio()
             if (noAtual != outroNo)
             {
                 int distancia = floyd(noAtual->getIdNo(), outroNo->getIdNo());
-                
+
                 distanciaMaxima = max(distanciaMaxima, distancia);
-             
             }
         }
 
@@ -644,19 +748,23 @@ int Grafo::calcularRaio()
  * @brief Calcula o centro do grafo.
  * @return Um vetor de inteiros com os centros do grafo.
  */
-vector<int> Grafo::calcularCentro() {
+vector<int> Grafo::calcularCentro()
+{
     int menorExcentricidade = INT_MAX;
     vector<int> centro = {};
 
-    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
         int excentricidadeAtual = 0;
 
-        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
+        {
             int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
-        if (excentricidadeAtual < menorExcentricidade) {
+        if (excentricidadeAtual < menorExcentricidade)
+        {
             menorExcentricidade = excentricidadeAtual;
             centro.push_back(noAtual->getIdNo());
         }
@@ -669,15 +777,17 @@ vector<int> Grafo::calcularCentro() {
  * @brief Calcula a periferia do grafo.
  * @return Um vetor de inteiros com as perifeiras do grafo.
  */
-vector<int> Grafo::calcularPeriferia() {
+vector<int> Grafo::calcularPeriferia()
+{
     int maiorExcentricidade = INT_MIN;
     vector<int> periferia;
 
-    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
         int excentricidadeAtual = 0;
 
-     
-        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
+        {
             int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
@@ -685,16 +795,18 @@ vector<int> Grafo::calcularPeriferia() {
         maiorExcentricidade = max(maiorExcentricidade, excentricidadeAtual);
     }
 
-    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
+    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    {
         int excentricidadeAtual = 0;
 
-    
-        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo()) {
+        for (No *outroNo = noRaiz; outroNo != nullptr; outroNo = outroNo->getProxNo())
+        {
             int distancia = dijkstra(noAtual->getIdNo(), outroNo->getIdNo());
             excentricidadeAtual = max(excentricidadeAtual, distancia);
         }
 
-        if (excentricidadeAtual == maiorExcentricidade) {
+        if (excentricidadeAtual == maiorExcentricidade)
+        {
             periferia.push_back(noAtual->getIdNo());
         }
     }
@@ -708,9 +820,9 @@ vector<int> Grafo::calcularPeriferia() {
  */
 vector<int> Grafo::ordenacaoTopologica()
 {
-    vector<int> resultado; // Vetor para armazenar a ordenação topológica
+    vector<int> resultado;             // Vetor para armazenar a ordenação topológica
     vector<int> grauEntrada(ordem, 0); // Vetor para armazenar o grau de entrada de cada nó
-    queue<No *> fila; // Fila para realizar a ordenação topológica
+    queue<No *> fila;                  // Fila para realizar a ordenação topológica
 
     // Calcula o grau de entrada de cada nó
     for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
@@ -766,13 +878,3 @@ vector<int> Grafo::ordenacaoTopologica()
 
     return resultado;
 }
-
-
-
-
-
-
-
-
-
-
