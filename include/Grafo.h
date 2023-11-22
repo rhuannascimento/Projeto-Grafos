@@ -69,7 +69,7 @@ public:
     int calcularRaio() ;
     string calcularCentro();
     string calcularPeriferia();
-    vector<int> ordenacaoTopologica();
+    string ordenacaoTopologica();
     string encontrarVerticesDeArticulacao();
     void encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao);
 

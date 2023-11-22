@@ -97,19 +97,12 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         break;
 
     case 9:
-        vetorAux = g->ordenacaoTopologica();
-
-        if (vetorAux.size() == 0)
-        {
-            result = "O grafo é acíclico direcionado.\n";
+        if(digrafo == false){
+            result = "A ordenação topológica só é aplicável a grafos direcionados.";
             break;
         }
-
         result = "Odenação topologica do grafo: ";
-        for (int i = 0; i < vetorAux.size(); i++)
-        {
-            result += vetorAux[i] + "  ";
-        }
+        result += g->ordenacaoTopologica();
         result += "\n";
 
         break;
@@ -242,9 +235,9 @@ int main(int argc, char *argv[])
     7[x] Árvore Geradora Mínima usando o algoritmo de Kruskal.
     8 Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
     9 Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
-    10[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
+    10[x] Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
     11[x] Conjunto de vértices de articulação.
-    12[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
+    12[x] Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
     */
     while (!quit)
     {
