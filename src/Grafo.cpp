@@ -339,7 +339,7 @@ string Grafo::fechoTransitivoDireto(int idNo)
         No *noAtual = pilha.top();
         pilha.pop();
 
-        visitados[noAtual->getIdNo()] = true;
+        visitados[noAtual->getIdNo() - 1] = true;
 
         fechoDireto += std::to_string(noAtual->getIdNo()) + ' ';
 
@@ -348,7 +348,7 @@ string Grafo::fechoTransitivoDireto(int idNo)
         {
             No *noDestino = buscaNo(aresta->getIdNoDestino());
 
-            if (!visitados[noDestino->getIdNo()])
+            if (!visitados[noDestino->getIdNo() - 1])
             {
                 pilha.push(noDestino);
             }
@@ -384,7 +384,7 @@ bool Grafo::existeCaminho(No *origem, No *destino)
 bool Grafo::buscaEmProfundidade(No *origem, No *destino, vector<bool> &visitados)
 {
 
-    visitados[origem->getIdNo()] = true;
+    visitados[origem->getIdNo() - 1] = true;
 
     if (origem == destino)
     {
@@ -462,8 +462,8 @@ int Grafo::dijkstra(int origem, int destino) {
     }
 
  
-    vector<int> distancia(ordem + 1, INT_MAX);
-    distancia[origem] = 0;
+    vector<int> distancia(ordem, INT_MAX);
+    distancia[origem - 1] = 0;
 
     set<int> visitados;
 
@@ -473,7 +473,7 @@ int Grafo::dijkstra(int origem, int destino) {
         int verticeAtual = -1;
         int distanciaMinima = INT_MAX;
 
-        for (int i = 1; i <= ordem; ++i) {
+        for (int i = 0; i < ordem; ++i) {
             if (visitados.find(i) == visitados.end() && distancia[i] < distanciaMinima) {
                 verticeAtual = i;
                 distanciaMinima = distancia[i];
@@ -486,25 +486,25 @@ int Grafo::dijkstra(int origem, int destino) {
 
         visitados.insert(verticeAtual);
 
-        No *noAtual = buscaNo(verticeAtual);
+        No *noAtual = buscaNo(verticeAtual + 1);
 
         Aresta *aresta = noAtual->getPrimeiraAresta();
 
         while(aresta != nullptr){
             No *vizinho =  buscaNo(aresta->getIdNoDestino()); 
             int custo = aresta->getPesoAresta();
-            distancia[vizinho->getIdNo()] = min(distancia[vizinho->getIdNo()], distancia[verticeAtual] + custo);
+            distancia[vizinho->getIdNo() - 1] = min(distancia[vizinho->getIdNo() - 1], distancia[verticeAtual] + custo);
             aresta = aresta->getProxAresta();
         }
     }
 
-    if (distancia[destino] == INT_MAX)
+    if (distancia[destino-1] == INT_MAX)
     {
         return -1;
     }
 
    
-    return distancia[destino];
+    return distancia[destino - 1];
 }
 
 /**
@@ -516,7 +516,7 @@ int Grafo::dijkstra(int origem, int destino) {
 int Grafo::floyd(int origem, int destino)
 {
     string result;
-    vector<vector<int>> distancia(ordem + 1, vector<int>(ordem + 1, INT_MAX));
+    vector<vector<int>> distancia(ordem, vector<int>(ordem, INT_MAX));
 
     No *noOrigem = buscaNo(origem);
     No *noDestino = buscaNo(destino);
@@ -532,22 +532,22 @@ int Grafo::floyd(int origem, int destino)
         return 0;
     }
 
-    for (int i = 1; i <= ordem; i++)
+    for (int i = 0; i < ordem; i++)
     {
         distancia[i][i] = 0;
-        Aresta *aresta = buscaNo(i)->getPrimeiraAresta();
+        Aresta *aresta = buscaNo(i + 1)->getPrimeiraAresta();
         while (aresta != nullptr)
         {
-            distancia[i][aresta->getIdNoDestino()] = aresta->getPesoAresta();
+            distancia[i][aresta->getIdNoDestino() - 1] = aresta->getPesoAresta();
             aresta = aresta->getProxAresta();
         }
     }
 
-    for (int k = 1; k <= ordem; k++)
+    for (int k = 0; k < ordem; k++)
     {
-        for (int i = 1; i <= ordem; i++)
+        for (int i = 0; i < ordem; i++)
         {
-            for (int j = 1; j <= ordem; j++)
+            for (int j = 0; j < ordem; j++)
             {
                 if (distancia[i][k] != INT_MAX && distancia[k][j] != INT_MAX &&
                     distancia[i][k] + distancia[k][j] < distancia[i][j])
@@ -558,12 +558,12 @@ int Grafo::floyd(int origem, int destino)
         }
     }
 
-    if (distancia[origem][destino] == INT_MAX)
+    if (distancia[origem - 1][destino - 1] == INT_MAX)
     {
         return -1;
     }
 
-    return distancia[origem][destino];
+    return distancia[origem - 1][destino - 1];
 }
 
 /**
@@ -666,11 +666,11 @@ string Grafo::kruskalAGM()
 
     sort(arestasOrdenadas.begin(), arestasOrdenadas.end());
 
-    vector<int> conjunto(ordem + 1);
+    vector<int> conjunto(ordem);
 
-    for (int i = 1; i <= ordem; ++i)
+    for (int i = 0; i < ordem; ++i)
     {
-        conjunto[i] = i;
+        conjunto[i] = i + 1;
     }
 
     vector<pair<int, pair<int, int>>> arvoreGeradoraMinima;
@@ -680,13 +680,13 @@ string Grafo::kruskalAGM()
         int origem = arestasOrdenadas[i].second.first;
         int destino = arestasOrdenadas[i].second.second;
 
-        if (conjunto[origem] != conjunto[destino])
+        if (conjunto[origem - 1] != conjunto[destino - 1])
         {
             arvoreGeradoraMinima.push_back(arestasOrdenadas[i]);
 
-            int conjuntoOrigem = conjunto[origem];
-            int conjuntoDestino = conjunto[destino];
-            for (int j = 1; j <= ordem; ++j)
+            int conjuntoOrigem = conjunto[origem - 1];
+            int conjuntoDestino = conjunto[destino - 1];
+            for (int j = 0; j < ordem; ++j)
             {
                 if (conjunto[j] == conjuntoDestino)
                 {
@@ -911,31 +911,31 @@ string Grafo::ordenacaoTopologica() {
 }
 
 /**
- * Auxiliar da função que encontra os vértices de articulação no grafo.
- */
+ * Auxiliar para enocontrar vertices articulados
+*/
 void Grafo::encontrarArticulacaoDFS(No* u, No* pai, int& tempo, vector<int>& descoberta, vector<int>& baixo, vector<bool>& visitado, set<int>& verticesDeArticulacao) {
     int filhos = 0;
 
-    descoberta[u->getIdNo()] = baixo[u->getIdNo()] = ++tempo;
-    visitado[u->getIdNo()] = true;
+    descoberta[u->getIdNo() - 1] = baixo[u->getIdNo() - 1] = ++tempo;
+    visitado[u->getIdNo() - 1] = true;
 
     Aresta* aresta = u->getPrimeiraAresta();
 
     while (aresta != nullptr) {
         No* v = buscaNo(aresta->getIdNoDestino());
 
-        if (!visitado[v->getIdNo()]) {
+        if (!visitado[v->getIdNo() - 1]) {
             filhos++;
             encontrarArticulacaoDFS(v, u, tempo, descoberta, baixo, visitado, verticesDeArticulacao);
 
-            baixo[u->getIdNo()] = min(baixo[u->getIdNo()], baixo[v->getIdNo()]);
+            baixo[u->getIdNo() - 1] = min(baixo[u->getIdNo() - 1], baixo[v->getIdNo() - 1]);
 
             // Verifica se u é vértice de articulação
-            if (baixo[v->getIdNo()] >= descoberta[u->getIdNo()] && pai != nullptr) {
+            if (baixo[v->getIdNo() - 1] >= descoberta[u->getIdNo() - 1] && pai != nullptr) {
                 verticesDeArticulacao.insert(u->getIdNo());
             }
         } else if (v != pai) {
-            baixo[u->getIdNo()] = min(baixo[u->getIdNo()], descoberta[v->getIdNo()]);
+            baixo[u->getIdNo() - 1] = min(baixo[u->getIdNo() - 1], descoberta[v->getIdNo() - 1]);
         }
 
         aresta = aresta->getProxAresta();
@@ -961,7 +961,7 @@ string Grafo::encontrarVerticesDeArticulacao() {
 
     // Inicia a DFS para encontrar os vértices de articulação
     for (No* noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo()) {
-        if (!visitado[noAtual->getIdNo()]) {
+        if (!visitado[noAtual->getIdNo() - 1]) {
             encontrarArticulacaoDFS(noAtual, nullptr, tempo, descoberta, baixo, visitado, verticesDeArticulacao);
         }
     }
@@ -989,11 +989,12 @@ string Grafo::AUXcaminhamentoProfundidade(No *noAtual, vector<bool> &visitados) 
     pilha.push({noAtual, nullptr});
 
     while (!pilha.empty()) {
-        auto [no, arestaAnterior] = pilha.top();
+        No *no = pilha.top().first;
+        Aresta *arestaAnterior = pilha.top().second;
         pilha.pop();
 
-        if (!visitados[no->getIdNo()]) {
-            visitados[no->getIdNo()] = true;
+        if (!visitados[no->getIdNo() - 1]) {
+            visitados[no->getIdNo() - 1] = true;
 
             resultado += "Visitando nó " + to_string(no->getIdNo());
 
@@ -1036,6 +1037,3 @@ string Grafo::arvoreCaminhamentoProfundidade(int idNo) {
 
     return resultado;
 }
-
-
-

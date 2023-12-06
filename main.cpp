@@ -138,7 +138,6 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
 
         if (!digrafo)
         {
-
             result = "Conjunto de vértices de articulação: " + g->encontrarVerticesDeArticulacao();
         }
         else
