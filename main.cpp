@@ -32,10 +32,8 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         break;
 
     case 2:
-
         if (digrafo)
         {
-
             cout << "Qual nó você deseja encontrar o fecho transitivo direto?" << endl;
             cin >> no;
 
@@ -43,13 +41,12 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         }
         else
         {
-            cout << "O grafo não é direcionado!" << endl;
+            cout << "ERRO: O grafo não é direcionado!" << endl;
         }
 
         break;
 
     case 3:
-
         if (digrafo)
         {
             cout << "Qual nó você deseja encontrar o fecho transitivo indireto?" << endl;
@@ -61,7 +58,6 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         {
             cout << "O grafo não é direcionado!" << endl;
         }
-
         break;
 
     case 4:
@@ -85,29 +81,26 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         break;
 
     case 6:
-
         result = g->primAGM();
 
         break;
 
     case 7:
-
         result = g->kruskalAGM();
 
         break;
 
     case 8:
         cout << "Qual nó voce deseja iniciar a arvore de caminhamento: " << endl;
-        cin >> no ;
-
+        cin >> no;
 
         result = g->arvoreCaminhamentoProfundidade(no);
-        
 
         break;
 
     case 9:
-        if(digrafo == false){
+        if (!digrafo)
+        {
             result = "A ordenação topológica só é aplicável a grafos direcionados.";
             break;
         }
@@ -142,7 +135,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         }
         else
         {
-            cout << "O grafo é direcionado!" << endl;
+            cout << "Erro: O grafo é direcionado!" << endl;
         }
 
         break;
