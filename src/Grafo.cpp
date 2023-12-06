@@ -396,7 +396,7 @@ bool Grafo::buscaEmProfundidade(No *origem, No *destino, vector<bool> &visitados
     {
         No *proximoNo = buscaNo(aresta->getIdNoDestino());
 
-        if (!visitados[proximoNo->getIdNo()] && buscaEmProfundidade(proximoNo, destino, visitados))
+        if (!visitados[proximoNo->getIdNo() - 1] && buscaEmProfundidade(proximoNo, destino, visitados))
         {
             return true;
         }
