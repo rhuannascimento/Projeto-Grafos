@@ -1,1 +1,0 @@
-#adicione aqui o cmake do seu sistema

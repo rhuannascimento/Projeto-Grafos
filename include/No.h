@@ -11,20 +11,26 @@ class Aresta;
 class No {
 public:
     No(int idNo);
+    No(int idNo, int peso);
     ~No();
 
-    int getIdNo () {return idNo;}
+    int getIdNo ();
+    int getPesoNo();
+    No * getProxNo();
+    Aresta * getPrimeiraAresta(){return primeiraAresta;}
 
     void setProxNo(No *no);
-    No * getProxNo();
+    Aresta * insertAresta(int destino);
+    Aresta * insertAresta(int destino, int peso);
+
 
 private:
-    int idNo;
+    int idNo = -1;
     int pesoNo;
     int grauEntrada;
     int grauSaida;
     No *proxNo;
-    Aresta *primeiraAresta;
+    Aresta *primeiraAresta = nullptr;
     Aresta *ultimaAresta;
 };
 

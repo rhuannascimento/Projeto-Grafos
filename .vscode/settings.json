@@ -1,13 +1,15 @@
 {
     "files.associations": {
-        "optional": "cpp",
-        "istream": "cpp",
-        "ostream": "cpp",
-        "system_error": "cpp",
+        "*.tcc": "cpp",
+        "new": "cpp",
         "array": "cpp",
-        "functional": "cpp",
-        "tuple": "cpp",
-        "type_traits": "cpp",
-        "utility": "cpp"
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "functional": "cpp"
     }
 }

@@ -1,10 +1,3 @@
-# Rodar no windows
-
-- Instale g++ [link](https://www.youtube.com/watch?v=1Uw9EV4Te8M)
-- Instale cmake [link](https://www.youtube.com/watch?v=8_X5Iq9niDE)
-- Cole o conteudo de CmakeParaWindows.yxy em CMakeLists.txt
-- Rode o comando ./exec.bat ou exec.bat
-
 # Padrões a serem seguidos
 
 ## ******************************Padrões de GIT******************************
@@ -45,18 +38,18 @@ apresentadas a seguir.
 
 ## Funcionalidades
 O programa deve oferecer as seguintes funcionalidades:
-- Fecho transitivo direto de um vértice.
-- Fecho transitivo indireto de um vértice.
-- Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
-- Caminho mínimo entre dois vértices usando algoritmo de Floyd.
-- Árvore Geradora Mínima usando o algoritmo de Prim.
-- Árvore Geradora Mínima usando o algoritmo de Kruskal.
+- [x] Fecho transitivo direto de um vértice.
+- [x] Fecho transitivo indireto de um vértice.
+- [x] Caminho mínimo entre dois vértices usando algoritmo de Dijkstra.
+- [x] Caminho mínimo entre dois vértices usando algoritmo de Floyd.
+- [x] Árvore Geradora Mínima usando o algoritmo de Prim.
+- [x] Árvore Geradora Mínima usando o algoritmo de Kruskal.
 - Árvore de caminhamento em profundidade a partir de um nó, destacando as arestas de retorno.
 - Ordenação topológica ou indicação de que o grafo não é acíclico direcionado.
-- Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
-- Conjunto de vértices de articulação.
-- Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
-- O programa deve apresentar um menu de opções e repetir até que o usuário escolha sair.
+-[x]Raio, diâmetro, centro e periferia do grafo ponderado nas arestas.
+-[x]Conjunto de vértices de articulação.
+-[x]Cada saída deve ser apresentada na tela e o usuário poderá optar por salvar a saída em arquivo.
+-[x]O programa deve apresentar um menu de opções e repetir até que o usuário escolha sair.
 
 ## Perguntas Frequentes
 1. Quantos membros um grupo pode ter?
