@@ -11,6 +11,7 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
 
     int no;
     int destino;
+    bool lerSubGrafo = true;
     int option = 0;
     string result = "";
     vector<int> vetorAux = {};
@@ -81,12 +82,49 @@ void execFunc(Grafo *g, int opt, ofstream &output_file, bool digrafo, bool ponde
         break;
 
     case 6:
-        result = g->primAGM();
+
+        while(lerSubGrafo){
+            
+            cout<<"Seu sub-grafo até o momento: ";
+            for(int i = 0; i<vetorAux.size(); i++){
+                cout<< vetorAux[i] << " ";
+            }
+
+            cout<<endl;
+
+            cout<<"Insira um nó no sub-grafo ou digite -1 para enviar o sub-grafo para função:"<<endl;
+            cin>>no;
+            if(no != -1){
+                vetorAux.push_back(no);
+            }else{
+                lerSubGrafo = false;
+            }
+        }
+
+        result = g->primAGM(vetorAux);
 
         break;
 
     case 7:
-        result = g->kruskalAGM();
+         while(lerSubGrafo){
+            
+            cout<<"Seu sub-grafo até o momento: ";
+            for(int i = 0; i<vetorAux.size(); i++){
+                cout<< vetorAux[i] << " ";
+            }
+
+            cout<<endl;
+
+            cout<<"Insira um nó no sub-grafo ou digite -1 para enviar o sub-grafo para função:"<<endl;
+            cin>>no;
+            if(no != -1){
+                vetorAux.push_back(no);
+            }else{
+                lerSubGrafo = false;
+            }
+        }
+        
+        result = g->kruskalAGM(vetorAux);
 
         break;
 

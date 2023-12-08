@@ -61,8 +61,8 @@ public:
     int dijkstra(int origem, int destino);
     int floyd(int origem, int destino);
 
-    string primAGM();
-    string kruskalAGM();
+    string primAGM(vector<int> subgrafo);
+    string kruskalAGM(vector<int> subgrafo);
     
 
     int calcularDiametro();

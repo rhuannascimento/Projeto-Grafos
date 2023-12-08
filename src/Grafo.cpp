@@ -25,6 +25,9 @@ Grafo::Grafo(bool digrafo, bool ponderado, int ordem, bool noPonderado)
     */
 }
 
+
+Grafo::Grafo(){}
+
 /**
  * @brief Destrutor da classe Grafo.
  */
@@ -569,7 +572,7 @@ int Grafo::floyd(int origem, int destino)
 /**
  * @brief Aplica o algoritmo de Prim para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
  */
-string Grafo::primAGM()
+string Grafo::primAGM(vector<int> subgrafo)
 {
 
     if (this->digrafo)
@@ -577,11 +580,31 @@ string Grafo::primAGM()
         return "Não é possível AGM em digrafos!";
     }
 
-    vector<bool> inAGM(ordem, false);
-    vector<int> chave(ordem, INT_MAX);
-    vector<int> pai(ordem, -1);
+    Grafo* gLocal = new Grafo();
+    int ordemAux = 0;
 
-    int raiz = noRaiz->getIdNo();
+    gLocal->digrafo = false;
+    gLocal->ponderado = true;
+
+    for (int i = 0; i < subgrafo.size(); i++)
+    {
+        No *noAux = buscaNo(subgrafo[i]);
+        Aresta *arestaAux = noAux->getPrimeiraAresta();
+        ordemAux += 1;
+        while(arestaAux != nullptr){
+            gLocal->insereAresta(noAux->getIdNo(), arestaAux->getIdNoDestino(), arestaAux->getPesoAresta());
+            arestaAux = arestaAux->getProxAresta();
+            ordemAux += 1;
+        }
+    }
+    
+    gLocal->ordem = ordemAux;
+
+    vector<bool> inAGM(gLocal->ordem, false);
+    vector<int> chave(gLocal->ordem, INT_MAX);
+    vector<int> pai(gLocal->ordem, -1);
+
+    int raiz = gLocal->noRaiz->getIdNo();
     chave[raiz - 1] = 0;
 
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> filaPrioridade;
@@ -597,7 +620,7 @@ string Grafo::primAGM()
 
         inAGM[u - 1] = true;
 
-        Aresta *aresta = buscaNo(u)->getPrimeiraAresta();
+        Aresta *aresta = gLocal->buscaNo(u)->getPrimeiraAresta();
         while (aresta != nullptr)
         {
             int v = aresta->getIdNoDestino();
@@ -619,7 +642,7 @@ string Grafo::primAGM()
 
     int pesoTotal = 0;
     result += "Arestas da Árvore Geradora Mínima (Prim): \n";
-    for (int i = 0; i < ordem; i++)
+    for (int i = 0; i < gLocal->ordem; i++)
     {
         if (pai[i] != -1)
         {
@@ -641,7 +664,7 @@ string Grafo::primAGM()
 /**
  * @brief Aplica o algoritmo de Kruskal para encontrar uma Árvore Geradora Mínima (AGM) no grafo.
  */
-string Grafo::kruskalAGM()
+string Grafo::kruskalAGM(vector<int> subgrafo)
 {
 
     if (this->digrafo)
@@ -649,9 +672,29 @@ string Grafo::kruskalAGM()
         return "Não é possível AGM em digrafos!";
     }
 
+    Grafo* gLocal = new Grafo();
+    int ordemAux = 0;
+
+    gLocal->digrafo = false;
+    gLocal->ponderado = true;
+
+    for (int i = 0; i < subgrafo.size(); i++)
+    {
+        No *noAux = buscaNo(subgrafo[i]);
+        Aresta *arestaAux = noAux->getPrimeiraAresta();
+        ordemAux += 1;
+        while(arestaAux != nullptr){
+            gLocal->insereAresta(noAux->getIdNo(), arestaAux->getIdNoDestino(), arestaAux->getPesoAresta());
+            arestaAux = arestaAux->getProxAresta();
+            ordemAux += 1;
+        }
+    }
+    
+    gLocal->ordem = ordemAux;
+
     vector<pair<int, pair<int, int>>> arestasOrdenadas;
 
-    for (No *noAtual = noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
+    for (No *noAtual = gLocal->noRaiz; noAtual != nullptr; noAtual = noAtual->getProxNo())
     {
         Aresta *aresta = noAtual->getPrimeiraAresta();
         while (aresta != nullptr)
@@ -666,9 +709,9 @@ string Grafo::kruskalAGM()
 
     sort(arestasOrdenadas.begin(), arestasOrdenadas.end());
 
-    vector<int> conjunto(ordem);
+    vector<int> conjunto(gLocal->ordem);
 
-    for (int i = 0; i < ordem; ++i)
+    for (int i = 0; i < gLocal->ordem; ++i)
     {
         conjunto[i] = i + 1;
     }
@@ -686,7 +729,7 @@ string Grafo::kruskalAGM()
 
             int conjuntoOrigem = conjunto[origem - 1];
             int conjuntoDestino = conjunto[destino - 1];
-            for (int j = 0; j < ordem; ++j)
+            for (int j = 0; j < gLocal->ordem; ++j)
             {
                 if (conjunto[j] == conjuntoDestino)
                 {
